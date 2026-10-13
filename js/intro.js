@@ -8,7 +8,8 @@
     return;
   }
   var reduce =
-      window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches,
+      window.matchMedia &&
+      matchMedia("(prefers-reduced-motion: reduce)").matches,
     MIN = reduce ? 600 : 2400,
     t0 = Date.now(),
     done = false;

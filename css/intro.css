@@ -179,15 +179,20 @@ html.intro-on body {
   bottom: 0;
   height: 22px;
   opacity: 0.9;
-  background:
-    conic-gradient(
-        var(--i-fg) 25%,
-        transparent 0 50%,
-        var(--i-fg) 0 75%,
-        transparent 0
-      )
-      0 0 / 22px 22px;
-  -webkit-mask: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+  background: conic-gradient(
+      var(--i-fg) 25%,
+      transparent 0 50%,
+      var(--i-fg) 0 75%,
+      transparent 0
+    )
+    0 0 / 22px 22px;
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent,
+    #000 25%,
+    #000 75%,
+    transparent
+  );
   mask: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
   animation: i-flag 1.2s linear infinite;
 }
