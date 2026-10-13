@@ -26,6 +26,7 @@ function driver(id) {
   const T = tally("d", id),
     stats = [
       ...(d.dateOfBirth ? [["🎂 Età", age(d.dateOfBirth) + " anni"]] : []),
+      ...(st ? [[medal(+st.position) + " Classifica", st.position + "°"]] : []),
       ["Gare", all.length],
       [medal(1) + " Vittorie", T.w],
       [medal(2) + " 2° posti", T.s],
@@ -71,7 +72,7 @@ function driver(id) {
       "",
     )}</div><p class="mut sl">Barra = punti · <b>numero</b> = gara · badge = posizione d'arrivo (${medal(1)}${medal(2)}${medal(3)} podio, R = ritirato) · G = griglia di partenza · ⏱ POLE = pole position, Q = posizione in qualifica</p>`;
   A.innerHTML =
-    `<div class="hero dh" style="--tc:${col(tm?.constructorId || "x")}"><span class="wm">${d.permanentNumber || ""}</span>${ph(d)}<div><h2 style="margin:0">${d.givenName} ${d.familyName}</h2><span class="mut">${flag(d.nationality)} ${d.nationality}${d.dateOfBirth ? " · " + bio(d) : ""}</span><br>${tm ? `<a class="tn" href="#/team/${tm.constructorId}">${ticon(tm.constructorId, tm.name, 26)}${tm.name}</a>` : ""}${st ? ` <b class="pill">${st.position}° · ${st.points} pt · ${st.wins} vitt.</b>` : ""}</div>${pn("d", id)}</div>` +
+    `<div class="hero dh" style="--tc:${col(tm?.constructorId || "x")}"><span class="wm">${d.permanentNumber || ""}</span>${ph(d)}<div><h2 style="margin:0">${d.givenName} ${d.familyName}</h2><span class="mut">${flag(d.nationality)} ${d.nationality}${d.dateOfBirth ? " · " + bio(d) : ""}</span><br>${tm ? `<a class="tn" href="#/team/${tm.constructorId}">${ticon(tm.constructorId, tm.name, 26)}${tm.name}</a>` : ""}${st ? ` ${rk(st.position)} <b class="pill">${st.points} pt · ${st.wins} vitt.</b>` : ""}</div>${pn("d", id)}</div>` +
     `<div class="stats">${stats.map(([a, b]) => `<div><b>${b}</b><small>${a}</small></div>`).join("")}</div>` +
     `<h3 class="sec">Punti gara per gara</h3>${spark}` +
     tbl(

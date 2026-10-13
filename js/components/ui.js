@@ -197,9 +197,15 @@ const ph = (d) => {
   return `<span class="av">${S.photos[d.driverId] ? `<img class="ph" src="${S.photos[d.driverId]}" alt="" loading="lazy" onerror="this.outerHTML='<i class=&quot;ph&quot;>${esc(d.code || d.familyName.slice(0, 3).toUpperCase())}</i>'">` : `<i class="ph">${d.code || d.familyName.slice(0, 3).toUpperCase()}</i>`}${c ? ticon(c, c.replace(/_/g, " ")) : ""}${nat && ISO[nat] ? flag(nat, "fl") : ""}</span>`;
 };
 // Posizione in classifica: 1°/2°/3° con medaglia ed evidenziati
-const rk = (n) =>
+// nm = true: senza medaglia (quando la medaglia è già mostrata altrove nella card)
+const rk = (n, nm) =>
   n
-    ? `<i class="rk r${+n <= 3 ? +n : 0}">${medal(+n) ? medal(+n) + " " : ""}${n}°</i>`
+    ? `<i class="rk r${+n <= 3 ? +n : 0}" title="${+n}° in classifica">${!nm && medal(+n) ? medal(+n) + " " : ""}${n}°</i>`
+    : "";
+// Fascia in alto nelle card squadra: medaglia + posizione (solo 1°/2°/3°)
+const tmb = (n) =>
+  +n >= 1 && +n <= 3
+    ? `<div class="tmb">${medal(+n)}<b>${+n}° posto</b></div>`
     : "";
 // Badge posizione: oro/argento/bronzo, punti, fuori dai punti, ritiro (R, D, W…)
 const pb = (t) => {

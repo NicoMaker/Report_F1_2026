@@ -28,7 +28,7 @@ function drivers() {
       .map((d) => {
         const sd = S.ds.find((x) => x.Driver.driverId === d.driverId),
           t = sd?.Constructors?.at(-1);
-        return `<a class="card dcd" style="--tc:${col(t?.constructorId || "x")}" href="#/driver/${d.driverId}"><span class="wm">${d.permanentNumber || ""}</span>${rk(sd?.position)}<div class="dn">${ph(d)}<span><b>${d.givenName} ${d.familyName}</b><br><small>${flag(d.nationality)} ${d.nationality}${t ? " · " + t.name : ""}${d.dateOfBirth ? `<br>🎂 ${itDate(d.dateOfBirth)} · ${age(d.dateOfBirth)} anni` : ""}</small></span></div>${tlh(tally("d", d.driverId))}</a>`;
+        return `<a class="card dcd p${+sd?.position <= 3 ? +sd.position : 0}" style="--tc:${col(t?.constructorId || "x")}" href="#/driver/${d.driverId}"><span class="wm">${d.permanentNumber || ""}</span>${rk(sd?.position)}<div class="dn">${ph(d)}<span><b>${d.givenName} ${d.familyName}</b><br><small>${flag(d.nationality)} ${d.nationality}${t ? " · " + t.name : ""}${d.dateOfBirth ? `<br>🎂 ${itDate(d.dateOfBirth)} · ${age(d.dateOfBirth)} anni` : ""}</small></span></div>${tlh(tally("d", d.driverId))}</a>`;
       })
       .join("")}</div>`;
 }
@@ -44,12 +44,12 @@ function teams() {
       .map((c) => {
         const id = c.Constructor.constructorId,
           k = col(id);
-        return `<div class="tc p${+c.position <= 3 ? +c.position : 0}" style="--tc:${k}"><a class="tch" href="#/team/${id}">${ticon(id, c.Constructor.name, 52)}<span class="tt"><b>${c.Constructor.name}</b><small>${c.Constructor.nationality || ""}</small></span>${rk(c.positionText)}</a><div class="tcs"><span><b>${c.points}</b> pt</span></div>${tlh(tally("c", id))}<div class="bar" style="width:${(c.points / m) * 100}%;background:${k}"></div>${drv(
+        return `<div class="tc p${+c.position <= 3 ? +c.position : 0}" style="--tc:${k}">${tmb(c.position)}<a class="tch" href="#/team/${id}">${ticon(id, c.Constructor.name, 52)}<span class="tt"><b>${c.Constructor.name}</b><small>${c.Constructor.nationality || ""}</small></span>${rk(c.positionText, true)}</a><div class="tcs"><span><b>${c.points}</b> pt</span></div>${tlh(tally("c", id))}<div class="bar" style="width:${(c.points / m) * 100}%;background:${k}"></div>${drv(
           id,
         )
           .map(
             (d) =>
-              `<div class="tcd">${dn(d.Driver)}<em>${d.points} pt</em></div>`,
+              `<div class="tcd"><span class="tcl">${rk(d.positionText)}${dn(d.Driver)}</span><em>${d.points} pt</em></div>`,
           )
           .join("")}</div>`;
       })
@@ -107,7 +107,7 @@ function team(id) {
     .filter(Boolean);
   const T = tally("c", id),
     stats = [
-      ["Classifica", c.position + "°"],
+      [medal(+c.position) + " Classifica", c.position + "°"],
       ["Punti", c.points],
       [medal(1) + " Vittorie", T.w],
       [medal(2) + " 2° posti", T.s],
@@ -116,8 +116,8 @@ function team(id) {
       ["Podi", T.w + T.s + T.t],
     ];
   A.innerHTML =
-    `<div class="hero th" style="--tc:${k}">${ticon(id, C.name, 104)}<div><h2 style="margin:0">${C.name}</h2><span class="mut">${flag(C.nationality)} ${C.nationality || ""} · ${ds.length} piloti</span></div><span class="wm tw2">${ticon(id, C.name, 150)}</span>${pn("c", id)}</div>` +
+    `<div class="hero th" style="--tc:${k}">${ticon(id, C.name, 104)}<div><h2 style="margin:0">${C.name}</h2><span class="mut">${flag(C.nationality)} ${C.nationality || ""} · ${ds.length} piloti</span> ${rk(c.position)}</div><span class="wm tw2">${ticon(id, C.name, 150)}</span>${pn("c", id)}</div>` +
     `<div class="stats">${stats.map(([a, b]) => `<div><b>${b}</b><small>${a}</small></div>`).join("")}</div>` +
-    `<div class="chips">${ds.map((d) => `<a class="chip" href="#/driver/${d.Driver.driverId}" style="text-decoration:none">${ph(d.Driver)}<b>${d.Driver.givenName[0]}. ${d.Driver.familyName}</b><em>${d.points} pt</em></a>`).join("")}</div>` +
+    `<div class="chips">${ds.map((d) => `<a class="chip" href="#/driver/${d.Driver.driverId}" style="text-decoration:none">${rk(d.positionText)}${ph(d.Driver)}<b>${d.Driver.givenName[0]}. ${d.Driver.familyName}</b><em>${d.points} pt</em></a>`).join("")}</div>` +
     `<h3 class="sec" style="display:flex;align-items:center;gap:8px">${ticon(id, C.name, 22)} Risultati gara per gara</h3>${fbox("Cerca gara, pilota, vittoria, doppietta…")}<div class="grid trl">${rows.join("")}</div>`;
 }

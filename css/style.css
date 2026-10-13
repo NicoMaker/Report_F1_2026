@@ -2461,3 +2461,106 @@ tbody tr.p3:hover {
 .dc2 .dn > span {
   min-width: 0;
 }
+
+/* Medaglia in alto nelle card squadra (1°/2°/3°) */
+.tc {
+  position: relative;
+}
+.tc.p1,
+.tc.p2,
+.tc.p3 {
+  padding-top: 40px;
+}
+.tmb {
+  position: absolute;
+  top: 6px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font:
+    italic 800 18px/1 "Barlow Condensed",
+    sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.tmb .mdl {
+  font-size: 26px;
+  filter: drop-shadow(0 2px 5px #0008);
+}
+.tc.p1 .tmb {
+  color: #f5c518;
+}
+.tc.p2 .tmb {
+  color: #d3d7dd;
+}
+.tc.p3 .tmb {
+  color: #d98b3f;
+}
+:root[data-theme="light"] .tc.p1 .tmb {
+  color: #a87c00;
+}
+:root[data-theme="light"] .tc.p2 .tmb {
+  color: #5f6670;
+}
+:root[data-theme="light"] .tc.p3 .tmb {
+  color: #8f511a;
+}
+
+/* Piloti dentro la card squadra: posizione in classifica (con medaglia se 1°/2°/3°) */
+.tcl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.tcd .rk {
+  font-size: 16px;
+  flex: none;
+}
+.tcd .rk.r1,
+.tcd .rk.r2,
+.tcd .rk.r3 {
+  font-size: 16px;
+  padding: 2px 9px 2px 6px;
+}
+.chip .rk {
+  font-size: 15px;
+  margin-left: 6px;
+}
+.chip .rk.r1,
+.chip .rk.r2,
+.chip .rk.r3 {
+  font-size: 15px;
+  padding: 2px 9px 2px 6px;
+}
+.hero .rk {
+  font-size: 20px;
+  vertical-align: middle;
+}
+.hero .rk.r1,
+.hero .rk.r2,
+.hero .rk.r3 {
+  font-size: 20px;
+}
+
+/* Card pilota: bordo oro/argento/bronzo per i primi 3 */
+.dcd.p1 {
+  border-color: #f5c518aa;
+  border-left-color: #f5c518;
+  box-shadow: 0 6px 24px #f5c51826;
+}
+.dcd.p2 {
+  border-color: #d3d7dd99;
+  border-left-color: #d3d7dd;
+  box-shadow: 0 6px 24px #d3d7dd30;
+}
+.dcd.p3 {
+  border-color: #d98b3f99;
+  border-left-color: #d98b3f;
+  box-shadow: 0 6px 24px #d98b3f30;
+}
+:root[data-theme="light"] .dcd.p2 {
+  border-color: #8b919acc;
+  border-left-color: #7d8591;
+}
