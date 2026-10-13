@@ -1139,9 +1139,23 @@ a.dc2:hover {
 .spark a.sc:hover {
   background: var(--card2);
 }
+/* Pole position: viola, così non si confonde con l'oro della vittoria */
 .spark a.sc.pole {
-  border-color: #f5c51866;
-  background: linear-gradient(180deg, #f5c51822, transparent 70%);
+  border-color: #a855f777;
+  background: linear-gradient(180deg, #a855f726, transparent 70%);
+}
+/* Pole + podio nella stessa gara: vince il colore del piazzamento */
+.spark a.sc.pole.pd1 {
+  border-color: #f5c51888;
+  background: linear-gradient(180deg, #f5c51826, transparent 70%);
+}
+.spark a.sc.pole.pd2 {
+  border-color: #d3d7dd88;
+  background: linear-gradient(180deg, #d3d7dd26, transparent 70%);
+}
+.spark a.sc.pole.pd3 {
+  border-color: #d98b3f88;
+  background: linear-gradient(180deg, #d98b3f26, transparent 70%);
 }
 .spark .spm {
   height: 18px;
@@ -1168,8 +1182,18 @@ a.dc2:hover {
   border-radius: 4px 4px 0 0;
   transition: filter 0.15s;
 }
-.spark .spb i.pd {
-  box-shadow: 0 -3px 12px color-mix(in srgb, var(--tc) 60%, transparent);
+/* Barre del podio: 1° oro, 2° argento, 3° bronzo (le altre restano del colore squadra) */
+.spark .spb i.g {
+  background: linear-gradient(180deg, #ffe27a, #e0a800);
+  box-shadow: 0 -3px 14px #f5c51888;
+}
+.spark .spb i.s {
+  background: linear-gradient(180deg, #f6f7f9, #aab0b8);
+  box-shadow: 0 -3px 14px #d3d7dd77;
+}
+.spark .spb i.b {
+  background: linear-gradient(180deg, #f0b27a, #b86a25);
+  box-shadow: 0 -3px 14px #d98b3f77;
 }
 .spark .spb i.off {
   background: var(--line);
@@ -1206,9 +1230,9 @@ a.dc2:hover {
   white-space: nowrap;
 }
 .spark .spp.on {
-  background: linear-gradient(135deg, #ffe27a, #e0a800);
-  color: #3a2b00;
-  box-shadow: 0 0 10px #f5c51866;
+  background: linear-gradient(135deg, #b672ff, #7c3aed);
+  color: #fff;
+  box-shadow: 0 0 10px #a855f788;
 }
 .spark a.off {
   opacity: 0.55;

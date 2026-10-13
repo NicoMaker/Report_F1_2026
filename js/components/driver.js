@@ -56,14 +56,14 @@ function driver(id) {
         p = +(y?.points || 0),
         pole = !!q && +q.position === 1,
         n = +y?.position,
-        cls = pole ? " pole" : "",
+        cls = pole ? " pole" + (n >= 1 && n <= 3 ? " pd" + n : "") : "",
         tip =
           `${r.raceName}\n` +
           (y
             ? `Arrivo: ${isNaN(+y.positionText) ? y.status || y.positionText : y.positionText + "°"}${y.grid ? " · Griglia: " + (y.grid === "0" ? "corsia box" : y.grid + "°") : ""} · ${p} pt`
             : "Gara non ancora disputata") +
           (q ? `\nQualifica: ${pole ? "POLE POSITION" : q.position + "°"}` : "");
-      return `<a href="#/race/${r.round}" class="sc${y ? "" : " off"}${cls}" title="${esc(tip)}"><span class="spm">${["", "🥇", "🥈", "🥉"][n] || ""}</span><b class="spv">${y ? p : ""}</b><span class="spb"><i style="height:${y ? Math.max(6, (p / mx) * 100) : 3}%" class="${y ? (n <= 3 ? "pd" : "") : "off"}"></i></span><small>${r.round}</small>${y ? pb(y.positionText) : '<span class="pb n">·</span>'}<em class="spg">${y ? (y.grid && y.grid !== "0" ? "G" + y.grid : "BOX") : ""}</em><u class="spp${pole ? " on" : ""}">${pole ? "⏱ POLE" : q ? "Q" + q.position : y ? "-" : ""}</u></a>`;
+      return `<a href="#/race/${r.round}" class="sc${y ? "" : " off"}${cls}" title="${esc(tip)}"><span class="spm">${["", "🥇", "🥈", "🥉"][n] || ""}</span><b class="spv">${y ? p : ""}</b><span class="spb"><i style="height:${y ? Math.max(6, (p / mx) * 100) : 3}%" class="${y ? ["", "g", "s", "b"][n] || "" : "off"}"></i></span><small>${r.round}</small>${y ? pb(y.positionText) : '<span class="pb n">·</span>'}<em class="spg">${y ? (y.grid && y.grid !== "0" ? "G" + y.grid : "BOX") : ""}</em><u class="spp${pole ? " on" : ""}">${pole ? "⏱ POLE" : q ? "Q" + q.position : y ? "-" : ""}</u></a>`;
     })
     .join("")}</div><p class="mut sl">Barra = punti · <b>numero</b> = gara · badge = posizione d'arrivo (🥇🥈🥉 podio, R = ritirato) · G = griglia di partenza · ⏱ POLE = pole position, Q = posizione in qualifica</p>`;
   A.innerHTML =
