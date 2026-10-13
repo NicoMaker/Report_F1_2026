@@ -2564,3 +2564,84 @@ tbody tr.p3:hover {
   border-color: #8b919acc;
   border-left-color: #7d8591;
 }
+
+/* ═══ Header v12: logo F1 al posto della scritta + riga rossa di posizione a tutta larghezza ═══ */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+.logo .lm {
+  display: grid;
+  place-items: center;
+}
+.logo .f1lg,
+.logo .f1fb {
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  border-radius: 10px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 10px #e1060055);
+  transition: transform 0.25s;
+}
+.logo:hover .f1lg,
+.logo:hover .f1fb {
+  transform: rotate(-6deg) scale(1.06);
+}
+.logo.hasimg .f1fb {
+  display: none;
+}
+.logo b {
+  margin: 0;
+  padding: 2px 9px 1px;
+  border-radius: 8px;
+  background: var(--red);
+  color: #fff;
+  font:
+    italic 800 20px "Barlow Condensed",
+    Impact,
+    sans-serif;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 640px) {
+  .logo .f1lg,
+  .logo .f1fb {
+    width: 34px;
+    height: 34px;
+  }
+  .logo b {
+    font-size: 18px;
+  }
+}
+
+/* Riga di base su tutta la larghezza dell'header + segmento acceso sotto la voce attiva */
+header:after {
+  left: 0;
+  right: 0;
+  width: auto;
+  height: 3px;
+  background: color-mix(in srgb, var(--red) 30%, transparent);
+}
+#nb {
+  position: absolute;
+  z-index: 2;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--red);
+  box-shadow: 0 0 14px 1px var(--red);
+  pointer-events: none;
+  transition:
+    left 0.35s cubic-bezier(0.65, 0, 0.35, 1),
+    width 0.35s cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.2s;
+}
+nav a.on {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 4px 16px #e1060055;
+}
