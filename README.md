@@ -15,6 +15,7 @@ Aggiornamento manuale: http://localhost:3000/api/refresh
 Apri index.html: i dati arrivano direttamente dall'API e restano in cache nel browser.
 
 ## Struttura
+
     index.html · css/style.css · server.js
     js/            api.js (API+cache) · utils.js (bandiere) · data.js · router.js
     js/components/ ui · calendar · standings · driver · race · search
@@ -31,10 +32,12 @@ Apri index.html: i dati arrivano direttamente dall'API e restano in cache nel br
       pitstops/    pitstops_<giro>.json            soste ai box
 
 ## Novità
+
 - **Podio** 2°-1°-3° con il 1° al centro (più alto, con corona); versione compatta su mobile. Presente in classifica piloti, costruttori e in Risultati/Qualifica/Sprint di ogni gara.
 - **Ricerca globale** nell'header (tasto `/`): piloti, squadre, gare, circuiti, paesi. Invio = pagina risultati.
 - **Filtri live** in ogni tabella e griglia, **ordinamento colonne** con un click, tema chiaro/scuro.
 - Nuove pagine **Squadra** (`#/team/<id>`) e statistiche nella pagina pilota.
 
 ## Novità
+
 - **Calendario**: in ogni gara si vede subito il vincitore (foto, nome, squadra con logo) e i 2°/3° con la loro squadra. Bandiere SVG locali: niente più "US", "IT" su Windows.

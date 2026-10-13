@@ -10,7 +10,10 @@ async function race(n, tab = "res") {
   n = n || lastDone() || 1;
   const r = S.races.find((x) => x.round == n);
   if (!r) throw new Error("Gara non trovata");
-  const L = r.Circuit.Location, w = S.res[n]?.Results?.[0], pq = S.q[n]?.QualifyingResults?.[0], tot = S.races.length;
+  const L = r.Circuit.Location,
+    w = S.res[n]?.Results?.[0],
+    pq = S.q[n]?.QualifyingResults?.[0],
+    tot = S.races.length;
   let h =
     `<div class="hero rh"><span class="fg big">${flag(L.country)}</span><div><small class="mut">Gara ${r.round} di ${tot}</small><h2 style="margin:2px 0">${r.raceName}</h2><span class="mut">${r.Circuit.circuitName} · ${L.locality}, ${L.country} · ${fd(r)}</span>${w ? `<br><b>🏆 ${w.Driver.givenName} ${w.Driver.familyName}</b> ${ticon(w.Constructor.constructorId, w.Constructor.name, 22)}` : ""}${pq ? `<br><span class="mut">⏱ Pole: ${pq.Driver.givenName} ${pq.Driver.familyName}</span>` : ""}</div><div class="nv">${+n > 1 ? `<a href="#/race/${+n - 1}/${tab}">‹</a>` : ""}${+n < tot ? `<a href="#/race/${+n + 1}/${tab}">›</a>` : ""}</div></div>` +
     sel(
