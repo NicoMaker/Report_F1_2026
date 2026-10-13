@@ -15,7 +15,7 @@ async function race(n, tab = "res") {
     pq = S.q[n]?.QualifyingResults?.[0],
     tot = S.races.length;
   let h =
-    `<div class="hero rh"><span class="fg big">${flag(L.country)}</span><div><small class="mut">Gara ${r.round} di ${tot}</small><h2 style="margin:2px 0">${r.raceName}</h2><span class="mut">${r.Circuit.circuitName} · ${L.locality}, ${L.country} · ${fd(r)}</span>${w ? `<br><b>🏆 ${flag(w.Driver.nationality)} ${w.Driver.givenName} ${w.Driver.familyName}</b> ${ticon(w.Constructor.constructorId, w.Constructor.name, 22)}` : ""}${pq ? `<br><span class="mut">⏱ Pole: ${flag(pq.Driver.nationality)} ${pq.Driver.givenName} ${pq.Driver.familyName}</span>` : ""}</div><div class="nv">${+n > 1 ? `<a rel="prev" href="#/race/${+n - 1}/${tab}">‹</a>` : ""}${+n < tot ? `<a rel="next" href="#/race/${+n + 1}/${tab}">›</a>` : ""}</div></div>` +
+    `<div class="hero rh"><span class="fg big">${flag(L.country)}</span><div><small class="mut">Gara ${r.round} di ${tot}</small><h2 style="margin:2px 0">${r.raceName}</h2><span class="mut">${r.Circuit.circuitName} · ${L.locality}, ${L.country} · ${fd(r)}</span>${w ? `<br><b>🏆 ${flag(w.Driver.nationality)} ${w.Driver.givenName} ${w.Driver.familyName}</b> ${ticon(w.Constructor.constructorId, w.Constructor.name, 22)}` : ""}${pq ? `<br><span class="mut">⏱ Pole: ${flag(pq.Driver.nationality)} ${pq.Driver.givenName} ${pq.Driver.familyName}</span> ${ticon(pq.Constructor.constructorId, pq.Constructor.name, 22)}` : ""}</div><div class="nv">${+n > 1 ? `<a rel="prev" href="#/race/${+n - 1}/${tab}">‹</a>` : ""}${+n < tot ? `<a rel="next" href="#/race/${+n + 1}/${tab}">›</a>` : ""}</div></div>` +
     sel(
       "rs",
       S.races.map((x) => [
