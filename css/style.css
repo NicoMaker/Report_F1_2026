@@ -413,3 +413,12 @@ tbody tr.p1:hover, tbody tr.p2:hover, tbody tr.p3:hover { filter: brightness(1.1
 /* Etichetta "1 SUL PODIO": argento (2°) o bronzo (3°) */
 .tag.t2 { background: linear-gradient(135deg, #fff, #b9bfc8); color: #1a1a1a; box-shadow: 0 0 0 1px #7d8591; }
 .tag.t3 { background: linear-gradient(135deg, #f0b27a, #b86a25); color: #2c1600; }
+
+/* Logo vero della squadra ovunque, anche nei badge piccoli accanto ai piloti */
+.av .ti img.bl { display: block; } .av .ti.blok svg { display: none; }
+.av .ti { --s: 24px; right: -7px; bottom: -6px; }
+.hero .av .ti { --s: 38px; } .pc .av .ti { --s: 32px; } .pc.s1 .av .ti { --s: 40px; } .dc2 .av .ti { --s: 26px; } #sr .av .ti { --s: 20px; }
+.av .ti img.bl { padding: 12%; border-radius: 28%; box-shadow: 0 0 0 1.5px var(--card), 0 1px 4px #0006; }
+.tn .ti img.bl, .wt .ti img.bl, .mp .ti img.bl, .w .ti img.bl, .tch .ti img.bl { padding: 10%; border-radius: 26%; box-shadow: 0 0 0 1px #0003; }
+@media (max-width: 520px) { .pc .av .ti { --s: 26px; } .pc.s1 .av .ti { --s: 30px; } .hero .av .ti { --s: 30px; } }
+.av .ti { --s: 20px; right: -6px; bottom: -5px; }
