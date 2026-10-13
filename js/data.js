@@ -9,9 +9,7 @@ async function init() {
   S.sp = byRound(sp);
   S.ds = ds(dsd);
   S.cs = cs(csd);
-  S.dc = Object.fromEntries(
-    S.ds.map((s) => [s.Driver.driverId, s.Constructors?.at(-1)?.constructorId]),
-  );
+  S.dc = Object.fromEntries(S.ds.map((s) => [s.Driver.driverId, s.Constructors?.at(-1)?.constructorId]));
   if (!S.races.length) {
     delete S.races;
     throw new Error(

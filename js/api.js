@@ -32,28 +32,9 @@
   };
   // Posizione dei file in data/ in base al tipo di dato
   const FILE = (k) => {
-    const m = k.match(/^([a-z]+)_\d+$/i),
-      g = {
-        laps: "laps",
-        pitstops: "pitstops",
-        dstand: "standings/drivers",
-        cstand: "standings/constructors",
-      };
+    const m = k.match(/^([a-z]+)_\d+$/i), g = { laps: "laps", pitstops: "pitstops", dstand: "standings/drivers", cstand: "standings/constructors" };
     if (m) return g[m[1]] + "/" + k;
-    return (
-      {
-        races: "races",
-        drivers: "drivers",
-        photos: "drivers",
-        results: "results",
-        qualifying: "results",
-        sprint: "results",
-        driverStandings: "standings",
-        constructorStandings: "standings",
-      }[k] +
-      "/" +
-      k
-    );
+    return { races: "races", drivers: "drivers", photos: "drivers", results: "results", qualifying: "results", sprint: "results", driverStandings: "standings", constructorStandings: "standings" }[k] + "/" + k;
   };
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   async function req(u) {
