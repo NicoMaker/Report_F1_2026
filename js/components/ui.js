@@ -260,17 +260,15 @@ const podT = (cs) =>
   );
 const podR = (x, f) =>
   podium(
-    x
-      .slice(0, 3)
-      .map((y, i) => ({
-        pos: i + 1,
-        href: `#/driver/${y.Driver.driverId}`,
-        c: col(y.Constructor.constructorId),
-        img: ph(y.Driver),
-        name: y.Driver.familyName,
-        sub: y.Constructor.name,
-        val: f(y) || "",
-      })),
+    x.slice(0, 3).map((y, i) => ({
+      pos: i + 1,
+      href: `#/driver/${y.Driver.driverId}`,
+      c: col(y.Constructor.constructorId),
+      img: ph(y.Driver),
+      name: y.Driver.familyName,
+      sub: y.Constructor.name,
+      val: f(y) || "",
+    })),
   );
 const nextRace = () => {
   const r = S.races.find((x) => !S.res[x.round]);
