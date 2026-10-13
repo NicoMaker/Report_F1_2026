@@ -24,10 +24,20 @@ const LOGO = {
   aston_martin: "2025/astonmartin/2025astonmartinlogowhite", cadillac: "2026/cadillac/2026cadillaclogowhite",
 };
 const logoUrl = (id, h) => `https://media.formula1.com/image/upload/c_fit,h_${h}/q_auto/v1740000001/common/f1/${LOGO[id]}.webp`;
+// Loghi a colori da brandlogos.net (tag f1-racing-team): prima scelta; se non si caricano restano i loghi F1 / l'emblema
+const BLB = "https://brandlogos.net/wp-content/uploads/";
+const BL = {
+  mercedes: "2026/01/mercedes-amg_petronas_f1_team-logo_brandlogos.net_m9qjq-300x331.png", ferrari: "2023/12/Scuderia-Ferrari-logo-512x696.png",
+  mclaren: "2022/04/mclaren_formula_1_team-logo-brandlogos.net_-300x300.png", red_bull: "2022/08/oracle_red_bull_racing-logo_brandlogos.net_ktyln-300x142.png",
+  rb: "2025/02/racing_bulls-logo_brandlogos.net_bjuef-300x249.png", alpine: "2025/02/alpine_f1_team-logo_brandlogos.net_4ny0w-300x173.png",
+  haas: "2026/01/tgr_haas_f1_team-logo_brandlogos.net_4cn45-300x275.png", audi: "2026/09/audi-revolut-f1-team-logo-512x473.png",
+  williams: "2026/01/atlassian_williams_f1_team-logo_brandlogos.net_stzcn-300x153.png", aston_martin: "2026/03/aston-martin-aramco-formula-one-team-2024-logo-512x152.png",
+  cadillac: "2025/05/cadillac_formula_1_team-logo_brandlogos.net_vhiar-300x154.png",
+};
 const ticon = (id, name = "", s) => {
   const t = TI[id] || [col(id), "#111", (name || id).slice(0, 3).toUpperCase(), "hex"], fs = [0, 56, 42, 34, 28][t[2].length] || 24;
   const lg = LOGO[id] ? `<img class="lg" src="${logoUrl(id, 128)}" data-s="${logoUrl(id, 64)}" alt="${esc(name)}" loading="lazy" onload="this.parentNode.classList.add('lgok')" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.dataset.s}else this.remove()">` : "";
-  return `<span class="ti" style="${s ? "--s:" + s + "px" : ""}" title="${esc(name)}"><svg viewBox="0 0 100 100" aria-hidden="true">${shp(t[3], t[1])}<g transform="translate(50 50) scale(.86) translate(-50 -50)">${shp(t[3], t[0])}</g><text x="50" y="50" dy=".35em" text-anchor="middle" font-size="${fs}" fill="#fff" stroke="${t[1]}" stroke-width="5" paint-order="stroke" stroke-linejoin="round" style="font-family:'Barlow Condensed',Impact,sans-serif;font-weight:800;font-style:italic">${t[2]}</text></svg>${lg}<img class="loc" src="img/teams/${id}.svg" alt="" onload="this.parentNode.classList.add('im')" onerror="this.remove()"></span>`;
+  return `<span class="ti" style="${s ? "--s:" + s + "px" : ""}" title="${esc(name)}"><svg viewBox="0 0 100 100" aria-hidden="true">${shp(t[3], t[1])}<g transform="translate(50 50) scale(.86) translate(-50 -50)">${shp(t[3], t[0])}</g><text x="50" y="50" dy=".35em" text-anchor="middle" font-size="${fs}" fill="#fff" stroke="${t[1]}" stroke-width="5" paint-order="stroke" stroke-linejoin="round" style="font-family:'Barlow Condensed',Impact,sans-serif;font-weight:800;font-style:italic">${t[2]}</text></svg>${lg}${BL[id] && (!s || s >= 36) ? `<img class="bl" src="${BLB}${BL[id]}" alt="${esc(name)}" referrerpolicy="no-referrer" loading="lazy" onload="this.parentNode.classList.add('blok')" onerror="this.remove()">` : ""}<img class="loc" src="img/teams/${id}.svg" alt="" onload="this.parentNode.classList.add('im')" onerror="this.remove()"></span>`;
 };
 // Titolo mondiale: "final" = stagione finita, "clinched" = matematico con gare ancora da correre, "open" = ancora aperto.
 // Punti massimi ancora in palio: pilota 25 a gara + 8 a sprint; squadra 25+18 a gara + 8+7 a sprint.

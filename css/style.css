@@ -403,3 +403,13 @@ tbody tr.p1:hover, tbody tr.p2:hover, tbody tr.p3:hover { filter: brightness(1.1
 :root[data-theme="light"] .pb.s, :root[data-theme="light"] .rk.r2, :root[data-theme="light"] .mp .m2 { background: linear-gradient(135deg, #e6e9ee, #9aa1ad); border: 1px solid #7d8591; color: #1a1a1a; }
 :root[data-theme="light"] .tc.p2 { border-color: #8b919acc; border-top-color: #7d8591; }
 :root[data-theme="light"] .tdv.p2 { border-color: #7d8591aa; } :root[data-theme="light"] .trw.s { border-left-color: #7d8591; }
+
+/* Loghi a colori (brandlogos.net) su badge bianco */
+.ti img.bl { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 12%; background: #fff; border-radius: 24%; z-index: 1; box-shadow: 0 1px 5px #0006; }
+.ti.blok svg, .ti.blok img.lg { display: none; }
+.av .ti img.bl { display: none; } .av .ti.blok svg { display: block; }
+.wall .ti img.bl, .pc .ti img.bl, .hero .ti img.bl { padding: 10%; }
+
+/* Etichetta "1 SUL PODIO": argento (2°) o bronzo (3°) */
+.tag.t2 { background: linear-gradient(135deg, #fff, #b9bfc8); color: #1a1a1a; box-shadow: 0 0 0 1px #7d8591; }
+.tag.t3 { background: linear-gradient(135deg, #f0b27a, #b86a25); color: #2c1600; }
