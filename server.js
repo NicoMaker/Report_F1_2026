@@ -1,78 +1,40 @@
-// node server.js  ->  http://localhost:3000  (scarica e salva i dati in data/ da solo, ogni REFRESH_MIN minuti)
-const http = require("http"),
-  fs = require("fs"),
-  path = require("path"),
-  F1 = require("./js/api.js");
-const D = path.join(__dirname, "data"),
-  PORT = process.env.PORT || 3000,
-  EVERY = (+process.env.REFRESH_MIN || 15) * 60000;
-fs.mkdirSync(D, { recursive: true });
-const file = (k) => path.join(D, k + ".json");
+// node server.js -> http://localhost:3000
+// Serve il sito e tiene aggiornati i JSON in data/<tipo>/ (da Jolpica) ogni REFRESH_MIN minuti (default 15)
+const http = require("http"), fs = require("fs"), path = require("path");
+const F1 = require("./js/api.js");
+const PORT = process.env.PORT || 3000, EVERY = (+process.env.REFRESH_MIN || 15) * 60000;
+const file = (k) => path.join(__dirname, "data", F1.FILE(k) + ".json");
+
 async function save(k) {
   try {
-    fs.writeFileSync(file(k), JSON.stringify(await F1.fetchLive(k)));
+    const j = await F1.fetchLive(k), f = file(k);
+    fs.mkdirSync(path.dirname(f), { recursive: true });
+    fs.writeFileSync(f, JSON.stringify(j));
     console.log("✓", k);
-  } catch (e) {
-    console.log("✗", k, e.message);
-  }
+  } catch (e) { console.log("✗", k, e.message); }
 }
 let busy = false;
 async function update() {
-  if (busy) return;
-  busy = true;
+  if (busy) return; busy = true;
   console.log("Aggiornamento dati…");
   for (const k of F1.CORE) await save(k);
   try {
-    const races = JSON.parse(fs.readFileSync(file("races"))).Races;
-    const done = races.filter(
-      (r) =>
-        new Date(r.date + "T" + (r.time || "23:59:59Z")).getTime() <
-        Date.now() - 3 * 36e5,
-    );
-    for (const r of done)
-      for (const p of ["dstand", "cstand", "pitstops", "laps"]) {
-        const k = p + "_" + r.round,
-          last = r === done[done.length - 1];
-        if (!fs.existsSync(file(k)) || (last && p !== "laps")) await save(k);
-      }
-  } catch (e) {
-    console.log("Errore giri/classifiche:", e.message);
-  }
-  console.log("Aggiornamento finito");
-  busy = false;
+    const races = JSON.parse(fs.readFileSync(file("races"), "utf8")).Races;
+    const finished = races.filter((r) => new Date(r.date + "T" + (r.time || "23:59:59Z")).getTime() < Date.now() - 3 * 36e5);
+    for (const r of finished) for (const p of ["dstand", "cstand", "pitstops", "laps"]) {
+      const k = p + "_" + r.round, last = r === finished.at(-1);
+      // scarica ciò che manca; per l'ultima gara aggiorna anche classifiche e pit stop
+      if (!fs.existsSync(file(k)) || (last && p !== "laps")) await save(k);
+    }
+  } catch (e) { console.log("Errore giri/classifiche:", e.message); }
+  console.log("Aggiornamento finito"); busy = false;
 }
-const T = {
-  ".html": "text/html",
-  ".css": "text/css",
-  ".js": "text/javascript",
-  ".json": "application/json",
-};
-http
-  .createServer((q, s) => {
-    const u = decodeURIComponent(q.url.split("?")[0]);
-    if (u === "/api/refresh") {
-      update();
-      s.end("ok");
-      return;
-    }
-    const f = path.join(__dirname, u === "/" ? "index.html" : u);
-    if (
-      !f.startsWith(__dirname) ||
-      !fs.existsSync(f) ||
-      fs.statSync(f).isDirectory()
-    ) {
-      s.statusCode = 404;
-      return s.end("404");
-    }
-    s.setHeader(
-      "Content-Type",
-      (T[path.extname(f)] || "application/octet-stream") + ";charset=utf-8",
-    );
-    s.setHeader("Cache-Control", "no-store");
-    fs.createReadStream(f).pipe(s);
-  })
-  .listen(PORT, () => {
-    console.log("Apri http://localhost:" + PORT);
-    update();
-    setInterval(update, EVERY);
-  });
+const T = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".txt": "text/plain" };
+http.createServer((q, s) => {
+  const u = decodeURIComponent(new URL(q.url, "http://x").pathname);
+  if (u === "/api/refresh") { update(); return s.end("ok"); }
+  const f = path.join(__dirname, u === "/" ? "index.html" : u);
+  if (!f.startsWith(__dirname) || !T[path.extname(f)] || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { s.statusCode = 404; return s.end("404"); }
+  s.setHeader("Content-Type", T[path.extname(f)] + ";charset=utf-8"); s.setHeader("Cache-Control", "no-store");
+  fs.createReadStream(f).pipe(s);
+}).listen(PORT, () => { console.log("Apri http://localhost:" + PORT); update(); setInterval(update, EVERY); });

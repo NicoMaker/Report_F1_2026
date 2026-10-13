@@ -10,7 +10,7 @@ function driver(id) {
           `<a href="#/race/${r.round}">${r.raceName}</a>`,
           tn(x.Constructor),
           x.grid,
-          x.positionText,
+          pb(x.positionText),
           x.points,
           x.Time?.time || x.status,
           x.FastestLap?.Time?.time || "",

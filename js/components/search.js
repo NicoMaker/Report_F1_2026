@@ -3,11 +3,11 @@ const norm = (s) => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g,
 function sIndex() {
   if (S._ix) return S._ix;
   const ix = [];
-  S.drivers.forEach((d) => ix.push({ k: "🏎️", t: `${d.givenName} ${d.familyName}`, s: `#${d.permanentNumber || "-"} · ${d.nationality}`, h: `#/driver/${d.driverId}`, x: norm([d.givenName, d.familyName, d.code, d.permanentNumber, d.nationality].join(" ")) }));
-  S.cs.forEach((c) => ix.push({ k: "🛠️", t: c.Constructor.name, s: `Squadra · ${c.points} pt`, h: `#/team/${c.Constructor.constructorId}`, x: norm(c.Constructor.name + " " + (c.Constructor.nationality || "") + " squadra team") }));
+  S.drivers.forEach((d) => ix.push({ k: ph(d), t: `${d.givenName} ${d.familyName}`, s: `#${d.permanentNumber || "-"} · ${d.nationality}`, h: `#/driver/${d.driverId}`, x: norm([d.givenName, d.familyName, d.code, d.permanentNumber, d.nationality].join(" ")) }));
+  S.cs.forEach((c) => ix.push({ k: ticon(c.Constructor.constructorId, c.Constructor.name, 30), t: c.Constructor.name, s: `Squadra · ${c.points} pt`, h: `#/team/${c.Constructor.constructorId}`, x: norm(c.Constructor.name + " " + (c.Constructor.nationality || "") + " squadra team") }));
   S.races.forEach((r) => {
     const l = r.Circuit.Location, w = S.res[r.round]?.Results?.[0]?.Driver;
-    ix.push({ k: "🏁", t: r.raceName, s: `Gara ${r.round} · ${l.locality}, ${l.country}`, h: `#/race/${r.round}`, x: norm([r.raceName, r.Circuit.circuitName, l.locality, l.country, "gara", r.round, w?.familyName].join(" ")) });
+    ix.push({ k: `<span class="fg" style="font-size:24px">${flag(l.country)}</span>`, t: r.raceName, s: `Gara ${r.round} · ${l.locality}, ${l.country}`, h: `#/race/${r.round}`, x: norm([r.raceName, r.Circuit.circuitName, l.locality, l.country, "gara", r.round, w?.familyName].join(" ")) });
   });
   return (S._ix = ix);
 }

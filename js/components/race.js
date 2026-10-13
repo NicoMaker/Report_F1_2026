@@ -12,7 +12,7 @@ async function race(n, tab = "res") {
   if (!r) throw new Error("Gara non trovata");
   const L = r.Circuit.Location, w = S.res[n]?.Results?.[0], pq = S.q[n]?.QualifyingResults?.[0], tot = S.races.length;
   let h =
-    `<div class="hero rh"><span class="fg big">${flag(L.country)}</span><div><small class="mut">Gara ${r.round} di ${tot}</small><h2 style="margin:2px 0">${r.raceName}</h2><span class="mut">${r.Circuit.circuitName} · ${L.locality}, ${L.country} · ${fd(r)}</span>${w ? `<br><b>🏆 ${w.Driver.givenName} ${w.Driver.familyName}</b>` : ""}${pq ? `<br><span class="mut">⏱ Pole: ${pq.Driver.givenName} ${pq.Driver.familyName}</span>` : ""}</div><div class="nv">${+n > 1 ? `<a href="#/race/${+n - 1}/${tab}">‹</a>` : ""}${+n < tot ? `<a href="#/race/${+n + 1}/${tab}">›</a>` : ""}</div></div>` +
+    `<div class="hero rh"><span class="fg big">${flag(L.country)}</span><div><small class="mut">Gara ${r.round} di ${tot}</small><h2 style="margin:2px 0">${r.raceName}</h2><span class="mut">${r.Circuit.circuitName} · ${L.locality}, ${L.country} · ${fd(r)}</span>${w ? `<br><b>🏆 ${w.Driver.givenName} ${w.Driver.familyName}</b> ${ticon(w.Constructor.constructorId, w.Constructor.name, 22)}` : ""}${pq ? `<br><span class="mut">⏱ Pole: ${pq.Driver.givenName} ${pq.Driver.familyName}</span>` : ""}</div><div class="nv">${+n > 1 ? `<a href="#/race/${+n - 1}/${tab}">‹</a>` : ""}${+n < tot ? `<a href="#/race/${+n + 1}/${tab}">›</a>` : ""}</div></div>` +
     sel(
       "rs",
       S.races.map((x) => [x.round, `${x.round}. ${x.raceName}`]),
@@ -37,7 +37,7 @@ async function race(n, tab = "res") {
             "Pt",
           ],
           x.map((y) => [
-            y.positionText,
+            pb(y.positionText),
             dn(y.Driver),
             tn(y.Constructor),
             y.grid,
@@ -59,7 +59,7 @@ async function race(n, tab = "res") {
         tbl(
           ["#", "Pilota", "Squadra", "Q1", "Q2", "Q3"],
           x.map((y) => [
-            y.position,
+            pb(y.position),
             dn(y.Driver),
             tn(y.Constructor),
             y.Q1,
@@ -77,7 +77,7 @@ async function race(n, tab = "res") {
         tbl(
           ["#", "Pilota", "Squadra", "Griglia", "Tempo / stato", "Pt"],
           x.map((y) => [
-            y.positionText,
+            pb(y.positionText),
             dn(y.Driver),
             tn(y.Constructor),
             y.grid,
@@ -158,14 +158,14 @@ async function race(n, tab = "res") {
       ? `<div class="two"><div><h3>Piloti</h3>${tbl(
           ["#", "Pilota", "Pt"],
           ds(a).map((s) => [
-            s.positionText,
+            pb(s.positionText),
             dn(s.Driver),
             `<b>${s.points}</b>`,
           ]),
         )}</div><div><h3>Squadre</h3>${tbl(
           ["#", "Squadra", "Pt"],
           cs(b).map((s) => [
-            s.positionText,
+            pb(s.positionText),
             tn(s.Constructor),
             `<b>${s.points}</b>`,
           ]),

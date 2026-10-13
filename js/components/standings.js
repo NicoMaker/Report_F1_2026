@@ -6,7 +6,7 @@ function drivers() {
     tbl(
       ["#", "Pilota", "Squadra", "🥇 Vitt.", "🥈 2°", "🥉 3°", "⏱ Pole", "Punti"],
       S.ds.map((s) => [
-        s.positionText,
+        pb(s.positionText),
         dn(s.Driver),
         tn(s.Constructors?.at(-1)),
         ...T3(tally("d", s.Driver.driverId)),
@@ -25,13 +25,13 @@ function teams() {
     `${fbox("Cerca squadra o pilota…")}<div class="grid tg">${S.cs
       .map((c) => {
         const id = c.Constructor.constructorId, k = col(id);
-        return `<div class="tc" style="--tc:${k}"><a class="tch" href="#/team/${id}">${ticon(id, c.Constructor.name, 52)}<span><b>${c.Constructor.name}</b><small>${c.Constructor.nationality || ""}</small></span><i>${c.positionText}°</i></a><div class="tcs"><span><b>${c.points}</b> pt</span></div>${tlh(tally("c", id))}<div class="bar" style="width:${(c.points / m) * 100}%;background:${k}"></div>${drv(id).map((d) => `<div class="tcd">${dn(d.Driver)}<em>${d.points} pt</em></div>`).join("")}</div>`;
+        return `<div class="tc" style="--tc:${k}"><a class="tch" href="#/team/${id}">${ticon(id, c.Constructor.name, 52)}<span class="tt"><b>${c.Constructor.name}</b><small>${c.Constructor.nationality || ""}</small></span><i>${c.positionText}°</i></a><div class="tcs"><span><b>${c.points}</b> pt</span></div>${tlh(tally("c", id))}<div class="bar" style="width:${(c.points / m) * 100}%;background:${k}"></div>${drv(id).map((d) => `<div class="tcd">${dn(d.Driver)}<em>${d.points} pt</em></div>`).join("")}</div>`;
       })
       .join("")}</div>` +
     `<h2 style="margin-top:22px">Classifica costruttori</h2>` +
     tbl(
       ["#", "Squadra", "🥇 Vitt.", "🥈 2°", "🥉 3°", "⏱ Pole", "Punti"],
-      S.cs.map((s) => [s.positionText, tn(s.Constructor), ...T3(tally("c", s.Constructor.constructorId)), `<b>${s.points}</b><div class="bar" style="width:${(s.points / m) * 100}%;background:${col(s.Constructor.constructorId)}"></div>`]),
+      S.cs.map((s) => [pb(s.positionText), tn(s.Constructor), ...T3(tally("c", s.Constructor.constructorId)), `<b>${s.points}</b><div class="bar" style="width:${(s.points / m) * 100}%;background:${col(s.Constructor.constructorId)}"></div>`]),
       pod(S.cs.map((s) => [+s.position])),
     );
 }
@@ -40,17 +40,17 @@ function team(id) {
   if (!c) throw new Error("Squadra non trovata");
   const C = c.Constructor, k = col(id);
   const ds = S.ds.filter((d) => d.Constructors?.some((x) => x.constructorId === id));
-  const rows = S.races
-    .map((r) => {
-      const rs = (S.res[r.round]?.Results || []).filter((y) => y.Constructor.constructorId === id);
-      return rs.length && [`<a href="#/race/${r.round}">${r.raceName}</a>`, rs.map((y) => dn(y.Driver)).join(""), rs.map((y) => y.positionText).join(" · "), `<b>${rs.reduce((a, y) => a + +y.points, 0)}</b>`];
-    })
-    .filter(Boolean);
-  const pods = S.races.reduce((n, r) => n + (S.res[r.round]?.Results || []).filter((y) => y.Constructor.constructorId === id && +y.position <= 3).length, 0);
+  const rows = S.races.map((r) => {
+    const rs = (S.res[r.round]?.Results || []).filter((y) => y.Constructor.constructorId === id).sort((a, b) => +a.position - +b.position);
+    if (!rs.length) return "";
+    const best = +rs[0].position, m = best === 1 ? "g" : best === 2 ? "s" : best === 3 ? "b" : "", pods = rs.filter((y) => +y.position <= 3).length;
+    const tag = rs.length > 1 && +rs[0].position === 1 && +rs[1].position === 2 ? "🏆 DOPPIETTA" : pods > 1 ? "2 SUL PODIO" : best === 1 ? "VITTORIA" : "";
+    return `<div class="trw ${m}"><div class="trh"><span class="fg">${flag(r.Circuit.Location.country)}</span><div><a href="#/race/${r.round}"><b>${r.raceName}</b></a><small>Gara ${r.round} · ${fd(r)}</small>${tag ? `<u class="tag">${tag}</u>` : ""}</div></div><div class="trd">${rs.map((y) => `<a class="tdv p${y.position <= 3 ? y.position : ""}" href="#/driver/${y.Driver.driverId}">${ph(y.Driver)}<span><b>${y.Driver.familyName}</b><small>griglia ${y.grid} · ${y.points} pt</small></span>${pb(y.positionText)}</a>`).join("")}</div><div class="trp"><b>${rs.reduce((a, y) => a + +y.points, 0)}</b><small>pt</small></div></div>`;
+  }).filter(Boolean);
   const T = tally("c", id), stats = [["Classifica", c.position + "°"], ["Punti", c.points], ["🥇 Vittorie", T.w], ["🥈 2° posti", T.s], ["🥉 3° posti", T.t], ["⏱ Pole", T.p], ["Podi", T.w + T.s + T.t]];
   A.innerHTML =
-    `<div class="hero th" style="--tc:${k}">${ticon(id, C.name, 104)}<div><h2 style="margin:0">${C.name}</h2><span class="mut">${C.nationality || ""} · ${ds.length} piloti</span></div></div>` +
+    `<div class="hero th" style="--tc:${k}">${ticon(id, C.name, 104)}<div><h2 style="margin:0">${C.name}</h2><span class="mut">${flag(C.nationality)} ${C.nationality || ""} · ${ds.length} piloti</span></div><span class="wm tw2">${ticon(id, C.name, 150)}</span></div>` +
     `<div class="stats">${stats.map(([a, b]) => `<div><b>${b}</b><small>${a}</small></div>`).join("")}</div>` +
-    `<div class="chips">${ds.map((d) => `<span class="chip">${dn(d.Driver)}<em>${d.points} pt</em></span>`).join("")}</div>` +
-    tbl(["Gara", "Piloti", "Arrivo", "Punti"], rows);
+    `<div class="chips">${ds.map((d) => `<a class="chip" href="#/driver/${d.Driver.driverId}" style="text-decoration:none">${ph(d.Driver)}<b>${d.Driver.givenName[0]}. ${d.Driver.familyName}</b><em>${d.points} pt</em></a>`).join("")}</div>` +
+    `<h3 class="sec" style="display:flex;align-items:center;gap:8px">${ticon(id, C.name, 22)} Risultati gara per gara</h3>${fbox("Cerca gara, pilota, vittoria, doppietta…")}<div class="grid trl">${rows.join("")}</div>`;
 }

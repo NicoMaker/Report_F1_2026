@@ -86,7 +86,7 @@ h3 { margin: 6px 0; }
 .pc small { font: italic 800 24px "Barlow Condensed", sans-serif; }
 .s1 small { color: #f5c518; font-size: 30px; } .s2 small { color: #c0c4c9; } .s3 small { color: #cd7f32; }
 .pc b { font-size: 17px; overflow-wrap: anywhere; }
-.pc span { color: var(--mut); font-size: 12px; }
+.pc .ps { color: var(--mut); font-size: 12px; }
 .pc em { font-style: normal; font-weight: 700; font-size: 13px; }
 
 .tw { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 4px; }
@@ -135,7 +135,7 @@ select { font: inherit; padding: 8px 10px; border-radius: 10px; border: 1px soli
   .pc.s1 { min-height: 172px; } .pc.s2 { min-height: 144px; } .pc.s3 { min-height: 126px; }
   .pc .ph { width: 44px; height: 44px; font-size: 11px; border-width: 2px; }
   .pc.s1 .ph { width: 60px; height: 60px; }
-  .pc b { font-size: 13px; } .pc span { display: none; } .pc em { font-size: 12px; }
+  .pc b { font-size: 13px; } .pc .ps { display: none; } .pc em { font-size: 12px; }
   .pc small { font-size: 18px; } .s1 small { font-size: 22px; } .cr { font-size: 18px; top: 4px; }
   .hero .ph { width: 64px; height: 64px; } .stats b { font-size: 22px; }
 }
@@ -164,7 +164,7 @@ select { font: inherit; padding: 8px 10px; border-radius: 10px; border: 1px soli
 .tc { background: linear-gradient(160deg, color-mix(in srgb, var(--tc) 22%, var(--card)), var(--card) 60%); border: 1px solid var(--line); border-top: 4px solid var(--tc); border-radius: var(--r); padding: 14px; transition: transform .15s, box-shadow .15s; }
 .tc:hover { transform: translateY(-3px); box-shadow: 0 12px 30px #0005; }
 .tch { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.tch span { flex: 1; display: flex; flex-direction: column; } .tch b { font-size: 19px; } .tch small { color: var(--mut); }
+.tch .tt { flex: 1; display: flex; flex-direction: column; } .tch b { font-size: 19px; } .tch small { color: var(--mut); }
 .tch i { font: italic 800 30px "Barlow Condensed", sans-serif; color: var(--tc); }
 .tcs { display: flex; gap: 16px; margin: 10px 0 2px; color: var(--mut); } .tcs b { color: var(--fg); font-size: 18px; }
 .tcd { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; } .tcd em { font-style: normal; color: var(--mut); }
@@ -206,9 +206,8 @@ a.dc2:hover { transform: translateY(-3px); }
 .rt { display: flex; align-items: center; gap: 8px; } .rt small, .rc p { color: var(--mut); margin: 0; } .rt u { text-decoration: none; color: var(--pur); font-weight: 700; }
 .rc h3 { font-size: 19px; margin: 8px 0 2px; }
 .mp { display: flex; gap: 6px; margin-top: 12px; }
-.mp span { flex: 1; display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 10px; font-weight: 700; font-size: 13px; background: color-mix(in srgb, var(--tc) 22%, var(--card2)); border-left: 3px solid var(--tc); }
+.mp > span { flex: 1; display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 10px; font-weight: 700; font-size: 13px; background: color-mix(in srgb, var(--tc) 22%, var(--card2)); border-left: 3px solid var(--tc); }
 .mp i { font: italic 800 14px "Barlow Condensed", sans-serif; color: var(--mut); }
-.mp span:nth-child(1) i { color: #f5c518; } .mp span:nth-child(2) i { color: #c0c4c9; } .mp span:nth-child(3) i { color: #cd7f32; }
 
 /* Pagina pilota / gara */
 .hero { position: relative; overflow: hidden; }
@@ -234,3 +233,48 @@ a.dc2:hover { transform: translateY(-3px); }
 .stats { grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); }
 th { font-size: 12px; }
 @media (max-width: 520px) { .pc .tl { font-size: 10px; gap: 1px 5px; } .stats { grid-template-columns: repeat(3, 1fr); } }
+
+/* Foto pilota + logo squadra, badge posizione, risultati squadra */
+.av { position: relative; display: inline-flex; flex: none; }
+.av .ti { --s: 16px; position: absolute; right: -5px; bottom: -4px; }
+.av .ti b, .av .ti:after { display: none; }
+.hero .av .ti { --s: 30px; } .pc .av .ti { --s: 24px; } .pc.s1 .av .ti { --s: 32px; filter: none; } .dc2 .av .ti { --s: 20px; }
+#sr .av .ti { --s: 14px; }
+.pb { display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 10px; font: italic 800 17px "Barlow Condensed", sans-serif; background: var(--card2); color: var(--mut); }
+.pb.g { background: linear-gradient(135deg, #ffe27a, #e0a800); color: #3a2b00; box-shadow: 0 0 14px #f5c51855; }
+.pb.s { background: linear-gradient(135deg, #f2f4f7, #aab0b8); color: #23262b; }
+.pb.b { background: linear-gradient(135deg, #e9a56a, #a85f1f); color: #2c1600; }
+.pb.p { background: #1f8f5a33; color: #3ddc97; } .pb.n { background: var(--card2); }
+.pb.x { background: #e1060026; color: #ff6b63; }
+td:first-child .pb { margin: -2px 0; }
+.trl { grid-template-columns: 1fr; gap: 10px; }
+.trw { display: grid; grid-template-columns: minmax(180px, 1.1fr) 2fr auto; gap: 14px; align-items: center; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--line); border-radius: var(--r); transition: transform .15s, box-shadow .15s; }
+.trw:hover { transform: translateX(3px); box-shadow: 0 8px 24px #0004; }
+.trw.g { border-left-color: #f5c518; background: linear-gradient(90deg, #f5c51826, var(--card) 45%); }
+.trw.s { border-left-color: #c0c4c9; background: linear-gradient(90deg, #c0c4c91f, var(--card) 45%); }
+.trw.b { border-left-color: #cd7f32; background: linear-gradient(90deg, #cd7f321f, var(--card) 45%); }
+.trh { display: flex; align-items: center; gap: 10px; min-width: 0; } .trh a { text-decoration: none; } .trh a:hover b { color: var(--red); }
+.trh small { display: block; color: var(--mut); }
+.tag { display: inline-block; margin-top: 3px; text-decoration: none; font-size: 11px; font-weight: 800; letter-spacing: .05em; padding: 2px 8px; border-radius: 99px; background: #f5c518; color: #3a2b00; }
+.trd { display: flex; flex-wrap: wrap; gap: 8px; }
+.tdv { flex: 1; min-width: 190px; display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 6px; border-radius: 14px; background: var(--card2); text-decoration: none; border: 1px solid transparent; transition: .15s; }
+.tdv:hover { border-color: var(--red); }
+.tdv.p1 { border-color: #f5c51877; } .tdv.p2 { border-color: #c0c4c977; } .tdv.p3 { border-color: #cd7f3277; }
+.tdv > span:nth-child(2) { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2; } .tdv small { color: var(--mut); font-size: 12px; }
+.tdv .pb { height: 34px; min-width: 38px; font-size: 20px; }
+.trp { text-align: center; } .trp b { display: block; font: italic 800 30px/1 "Barlow Condensed", sans-serif; } .trp small { color: var(--mut); }
+.tw2 { right: 10px !important; top: 8px !important; opacity: .14 !important; }
+@media (max-width: 760px) { .trw { grid-template-columns: 1fr auto; } .trd { grid-column: 1 / -1; order: 3; } .tdv { min-width: 100%; } }
+@media (max-width: 520px) { .pc .av .ti { --s: 18px; } .pc.s1 .av .ti { --s: 22px; } .hero .av .ti { --s: 24px; } }
+
+/* Bandiere (immagini), vincitore nel calendario, fix riquadri leader */
+.flag { display: inline-block; height: 1em; width: 1.5em; object-fit: cover; border-radius: .14em; vertical-align: -.14em; box-shadow: 0 0 0 1px #0005; }
+.fg { display: inline-flex; align-items: center; }
+.dc2 { display: flex; flex-direction: column; gap: 6px; } .dc2 .dn { display: flex; margin: 0; }
+.win { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 10px; border-radius: 14px; border-left: 4px solid #f5c518; background: linear-gradient(120deg, color-mix(in srgb, var(--tc) 38%, var(--card2)), var(--card2) 85%); }
+.win .ph { width: 52px; height: 52px; border: 2px solid var(--tc); }
+.win small { display: block; color: #f5c518; font-weight: 800; letter-spacing: .06em; font-size: 11px; }
+.win b { display: block; font-size: 17px; line-height: 1.15; } .win > div { min-width: 0; }
+.wt { display: flex; align-items: center; gap: 6px; color: var(--mut); }
+.mp { margin-top: 8px; } .mp .m2 { color: #c0c4c9; } .mp .m3 { color: #cd7f32; } .mp i { font-size: 15px; }
+@media (max-width: 520px) { .pc.s1 { padding-top: 28px; } }

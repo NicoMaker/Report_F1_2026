@@ -30,6 +30,12 @@
     const m = k.match(/^(\w+)_(\d+)$/);
     return m ? `/${m[2]}/${R[m[1]]}` : P[k];
   };
+  // Posizione dei file in data/ in base al tipo di dato
+  const FILE = (k) => {
+    const m = k.match(/^([a-z]+)_\d+$/i), g = { laps: "laps", pitstops: "pitstops", dstand: "standings/drivers", cstand: "standings/constructors" };
+    if (m) return g[m[1]] + "/" + k;
+    return { races: "races", drivers: "drivers", photos: "drivers", results: "results", qualifying: "results", sprint: "results", driverStandings: "standings", constructorStandings: "standings" }[k] + "/" + k;
+  };
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   async function req(u) {
     for (let i = 1; i <= 6; i++) {
@@ -103,7 +109,7 @@
     // 1) file salvato dal server 2) API live 3) cache locale
     if (MEM[k]) return MEM[k];
     try {
-      const r = await fetch("data/" + k + ".json", { cache: "no-store" });
+      const r = await fetch("data/" + FILE(k) + ".json", { cache: "no-store" });
       if (r.ok) return (MEM[k] = await r.json());
     } catch {}
     try {
@@ -121,6 +127,7 @@
   }
   const F1 = {
     fetchLive,
+    FILE,
     load,
     CORE,
     reset: () => {

@@ -1,10 +1,5 @@
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-const ph = (d) =>
-  S.photos[d.driverId]
-    ? `<img class="ph" src="${S.photos[d.driverId]}" alt="" loading="lazy">`
-    : `<i class="ph">${d.code || d.familyName.slice(0, 3).toUpperCase()}</i>`;
-
 // Emblemi squadra: generati (forma + colori + sigla). Se esiste img/teams/<id>.svg lo usa al suo posto.
 const TI = {
   mercedes: ["#00d2be", "#0b4f4a", "MER", "circle"], ferrari: ["#e8002d", "#7a0016", "SF", "shield"],
@@ -31,6 +26,16 @@ const tally = (by, id) => {
 };
 const T3 = (o) => [o.w, o.s, o.t, o.p];
 const tlh = (o) => `<span class="tl"><b title="Vittorie">🥇 ${o.w}</b><b title="Secondi posti">🥈 ${o.s}</b><b title="Terzi posti">🥉 ${o.t}</b><b title="Pole position">⏱ Pole ${o.p}</b></span>`;
+// Foto pilota con piccolo logo della sua squadra
+const ph = (d) => {
+  const c = S.dc?.[d.driverId];
+  return `<span class="av">${S.photos[d.driverId] ? `<img class="ph" src="${S.photos[d.driverId]}" alt="" loading="lazy">` : `<i class="ph">${d.code || d.familyName.slice(0, 3).toUpperCase()}</i>`}${c ? ticon(c, c.replace(/_/g, " ")) : ""}</span>`;
+};
+// Badge posizione: oro/argento/bronzo, punti, fuori dai punti, ritiro (R, D, W…)
+const pb = (t) => {
+  const n = +t, x = isNaN(n);
+  return `<span class="pb ${x ? "x" : n === 1 ? "g" : n === 2 ? "s" : n === 3 ? "b" : n <= 10 ? "p" : "n"}">${x ? t : n}</span>`;
+};
 const dn = (d) =>
   `<a class="dn" href="#/driver/${d.driverId}">${ph(d)}<span>${d.givenName[0]}. <b>${d.familyName}</b></span></a>`;
 const tn = (c) =>
@@ -52,7 +57,7 @@ const podium = (l) =>
     .filter(Boolean)
     .map(
       (x) =>
-        `<a class="pc s${x.pos}" href="${x.href}" style="--tc:${x.c}">${x.pos === 1 ? '<u class="cr">👑</u>' : ""}${x.img}<small>${x.pos}°</small><b>${x.name}</b><span>${x.sub}</span><em>${x.val}</em>${x.tl || ""}</a>`,
+        `<a class="pc s${x.pos}" href="${x.href}" style="--tc:${x.c}">${x.pos === 1 ? '<u class="cr">👑</u>' : ""}${x.img}<small>${x.pos}°</small><b>${x.name}</b><span class="ps">${x.sub}</span><em>${x.val}</em>${x.tl || ""}</a>`,
     )
     .join("")}</div>`;
 const podD = (ds) =>
