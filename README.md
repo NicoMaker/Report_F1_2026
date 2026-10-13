@@ -15,6 +15,7 @@ Aggiornamento manuale: http://localhost:3000/api/refresh
 Apri index.html: i dati arrivano direttamente dall'API e restano in cache nel browser.
 
 ## Struttura
+
     index.html · css/style.css · server.js
     js/            api.js (API+cache) · utils.js (bandiere) · data.js · router.js
     js/components/ ui · calendar · standings · driver · race · search
@@ -31,6 +32,7 @@ Apri index.html: i dati arrivano direttamente dall'API e restano in cache nel br
       pitstops/    pitstops_<giro>.json            soste ai box
 
 ## Novità (v2.2)
+
 - **Data di nascita all'italiana** ("25 agosto 2006") con **età sempre aggiornata** (calcolata ogni volta sulla data di oggi): pagina pilota, statistiche e schede "Tutti i piloti".
 - **Bandiera della nazionalità** del pilota su ogni avatar (basso a sinistra, il logo squadra è a destra), nel podio, nelle tabelle, nel calendario (2°/3°), nella ricerca e accanto a vincitore/pole nella pagina gara.
 - **Emblemi squadra** ora in SVG inline: si vedono sempre, anche senza i file in `img/teams/` (se aggiungi `img/teams/<constructorId>.svg` viene usato quello).
@@ -39,10 +41,12 @@ Apri index.html: i dati arrivano direttamente dall'API e restano in cache nel br
 - Se la foto di un pilota non si carica compaiono le iniziali.
 
 ## Novità
+
 - **Podio** 2°-1°-3° con il 1° al centro (più alto, con corona); versione compatta su mobile. Presente in classifica piloti, costruttori e in Risultati/Qualifica/Sprint di ogni gara.
 - **Ricerca globale** nell'header (tasto `/`): piloti, squadre, gare, circuiti, paesi. Invio = pagina risultati.
 - **Filtri live** in ogni tabella e griglia, **ordinamento colonne** con un click, tema chiaro/scuro.
 - Nuove pagine **Squadra** (`#/team/<id>`) e statistiche nella pagina pilota.
 
 ## Novità
+
 - **Calendario**: in ogni gara si vede subito il vincitore (foto, nome, squadra con logo) e i 2°/3° con la loro squadra. Bandiere SVG locali: niente più "US", "IT" su Windows.

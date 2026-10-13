@@ -10,12 +10,20 @@ async function race(n, tab = "res") {
   n = n || lastDone() || 1;
   const r = S.races.find((x) => x.round == n);
   if (!r) throw new Error("Gara non trovata");
-  const L = r.Circuit.Location, w = S.res[n]?.Results?.[0], pq = S.q[n]?.QualifyingResults?.[0], tot = S.races.length;
+  const L = r.Circuit.Location,
+    w = S.res[n]?.Results?.[0],
+    pq = S.q[n]?.QualifyingResults?.[0],
+    tot = S.races.length;
   let h =
     `<div class="hero rh"><span class="fg big">${flag(L.country)}</span><div><small class="mut">Gara ${r.round} di ${tot}</small><h2 style="margin:2px 0">${r.raceName}</h2><span class="mut">${r.Circuit.circuitName} · ${L.locality}, ${L.country} · ${fd(r)}</span>${w ? `<br><b>🏆 ${flag(w.Driver.nationality)} ${w.Driver.givenName} ${w.Driver.familyName}</b> ${ticon(w.Constructor.constructorId, w.Constructor.name, 22)}` : ""}${pq ? `<br><span class="mut">⏱ Pole: ${flag(pq.Driver.nationality)} ${pq.Driver.givenName} ${pq.Driver.familyName}</span>` : ""}</div><div class="nv">${+n > 1 ? `<a rel="prev" href="#/race/${+n - 1}/${tab}">‹</a>` : ""}${+n < tot ? `<a rel="next" href="#/race/${+n + 1}/${tab}">›</a>` : ""}</div></div>` +
     sel(
       "rs",
-      S.races.map((x) => [x.round, `${x.round}. ${x.raceName}`, `${x.Circuit.circuitName} ${x.Circuit.Location.locality} ${x.Circuit.Location.country} ${x.date}`, `<span class="fg">${flag(x.Circuit.Location.country)}</span>`]),
+      S.races.map((x) => [
+        x.round,
+        `${x.round}. ${x.raceName}`,
+        `${x.Circuit.circuitName} ${x.Circuit.Location.locality} ${x.Circuit.Location.country} ${x.date}`,
+        `<span class="fg">${flag(x.Circuit.Location.country)}</span>`,
+      ]),
       n,
     ) +
     `<div class="tabs">${TABS.map(([k, l]) => `<a href="#/race/${n}/${k}" class="${k === tab ? "on" : ""}">${l}</a>`).join("")}</div>`;
@@ -106,7 +114,14 @@ async function race(n, tab = "res") {
           "ld",
           ids.map((i) => {
             const d = S.drivers.find((x) => x.driverId === i);
-            return [i, d ? `${d.givenName} ${d.familyName}` : i, d ? `${d.code || ""} ${d.permanentNumber || ""} ${d.nationality || ""}` : "", d ? flag(d.nationality) : ""];
+            return [
+              i,
+              d ? `${d.givenName} ${d.familyName}` : i,
+              d
+                ? `${d.code || ""} ${d.permanentNumber || ""} ${d.nationality || ""}`
+                : "",
+              d ? flag(d.nationality) : "",
+            ];
           }),
           cur,
         ) +
