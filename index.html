@@ -2,25 +2,29 @@
 <html lang="it">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>F1 2026 · Dati</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0c10" />
+    <title>F1 2026 · Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏁%3C/text%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&family=Barlow+Semi+Condensed:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&family=Barlow+Semi+Condensed:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <header>
       <a class="logo" href="#/">F1<b>2026</b></a>
-      <nav>
-        <a href="#/">Calendario</a><a href="#/drivers">Piloti</a
-        ><a href="#/teams">Squadre</a><a href="#/race">Gara</a>
-      </nav>
+      <div class="sb">
+        <input id="q" type="search" placeholder="Cerca piloti, squadre, gare…  ( / )" autocomplete="off" aria-label="Cerca" />
+        <div id="sr" hidden></div>
+      </div>
+      <button id="th" title="Tema chiaro/scuro">◐</button>
       <button id="rf" title="Ricarica i dati">↻</button>
+      <nav>
+        <a href="#/">Calendario</a><a href="#/drivers">Piloti</a><a href="#/teams">Squadre</a><a href="#/race">Gara</a>
+      </nav>
     </header>
     <main id="app"></main>
+    <footer>Dati: Jolpica/Ergast · foto Wikipedia · emblemi squadra stilizzati</footer>
     <script src="js/api.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/components/ui.js"></script>
@@ -29,6 +33,7 @@
     <script src="js/components/standings.js"></script>
     <script src="js/components/driver.js"></script>
     <script src="js/components/race.js"></script>
+    <script src="js/components/search.js"></script>
     <script src="js/router.js"></script>
   </body>
 </html>

@@ -10,8 +10,9 @@ async function race(n, tab = "res") {
   n = n || lastDone() || 1;
   const r = S.races.find((x) => x.round == n);
   if (!r) throw new Error("Gara non trovata");
+  const L = r.Circuit.Location, w = S.res[n]?.Results?.[0], pq = S.q[n]?.QualifyingResults?.[0], tot = S.races.length;
   let h =
-    `<h2>${r.raceName}</h2><p class="mut">${r.Circuit.circuitName} · ${r.Circuit.Location.locality}, ${r.Circuit.Location.country} · ${fd(r)}</p>` +
+    `<div class="hero rh"><span class="fg big">${flag(L.country)}</span><div><small class="mut">Gara ${r.round} di ${tot}</small><h2 style="margin:2px 0">${r.raceName}</h2><span class="mut">${r.Circuit.circuitName} · ${L.locality}, ${L.country} · ${fd(r)}</span>${w ? `<br><b>🏆 ${w.Driver.givenName} ${w.Driver.familyName}</b>` : ""}${pq ? `<br><span class="mut">⏱ Pole: ${pq.Driver.givenName} ${pq.Driver.familyName}</span>` : ""}</div><div class="nv">${+n > 1 ? `<a href="#/race/${+n - 1}/${tab}">‹</a>` : ""}${+n < tot ? `<a href="#/race/${+n + 1}/${tab}">›</a>` : ""}</div></div>` +
     sel(
       "rs",
       S.races.map((x) => [x.round, `${x.round}. ${x.raceName}`]),
@@ -23,7 +24,8 @@ async function race(n, tab = "res") {
   if (tab === "res") {
     const x = S.res[n]?.Results;
     h += x
-      ? tbl(
+      ? podR(x, (y) => y.Time?.time || y.status) +
+        tbl(
           [
             "#",
             "Pilota",
@@ -53,7 +55,8 @@ async function race(n, tab = "res") {
   if (tab === "q") {
     const x = S.q[n]?.QualifyingResults;
     h += x
-      ? tbl(
+      ? podR(x, (y) => y.Q3 || y.Q2 || y.Q1) +
+        tbl(
           ["#", "Pilota", "Squadra", "Q1", "Q2", "Q3"],
           x.map((y) => [
             y.position,
@@ -70,7 +73,8 @@ async function race(n, tab = "res") {
   if (tab === "sp") {
     const x = S.sp[n]?.SprintResults;
     h += x
-      ? tbl(
+      ? podR(x, (y) => y.Time?.time || y.status) +
+        tbl(
           ["#", "Pilota", "Squadra", "Griglia", "Tempo / stato", "Pt"],
           x.map((y) => [
             y.positionText,

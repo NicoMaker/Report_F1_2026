@@ -40,3 +40,6 @@ const sec = (t) => {
 };
 const ds = (l) => l?.StandingsLists?.[0]?.DriverStandings || [],
   cs = (l) => l?.StandingsLists?.[0]?.ConstructorStandings || [];
+const FL = { Australia: "🇦🇺", China: "🇨🇳", Japan: "🇯🇵", USA: "🇺🇸", Canada: "🇨🇦", Monaco: "🇲🇨", Spain: "🇪🇸", Austria: "🇦🇹", UK: "🇬🇧", Belgium: "🇧🇪", Hungary: "🇭🇺", Netherlands: "🇳🇱", Italy: "🇮🇹", Azerbaijan: "🇦🇿", Malaysia: "🇲🇾", Singapore: "🇸🇬", Mexico: "🇲🇽", Brazil: "🇧🇷", Qatar: "🇶🇦", UAE: "🇦🇪", Bahrain: "🇧🇭", "Saudi Arabia": "🇸🇦",
+  Italian: "🇮🇹", British: "🇬🇧", Dutch: "🇳🇱", Monegasque: "🇲🇨", Spanish: "🇪🇸", German: "🇩🇪", French: "🇫🇷", Australian: "🇦🇺", Thai: "🇹🇭", Canadian: "🇨🇦", Mexican: "🇲🇽", Finnish: "🇫🇮", Japanese: "🇯🇵", Brazilian: "🇧🇷", "New Zealander": "🇳🇿", Argentine: "🇦🇷", American: "🇺🇸", Danish: "🇩🇰", Chinese: "🇨🇳", Swiss: "🇨🇭", Austrian: "🇦🇹" };
+const flag = (k) => FL[k] || "🏁";

@@ -17,3 +17,9 @@ Apri index.html: i dati arrivano direttamente dall'API e restano in cache nel br
 ## Struttura
 
 index.html · css/style.css · js/api.js (API+cache) · js/utils.js · js/data.js · js/components/{ui,calendar,standings,driver,race}.js · js/router.js · server.js · data/
+
+## Novità
+- **Podio** 2°-1°-3° con il 1° al centro (più alto, con corona); versione compatta su mobile. Presente in classifica piloti, costruttori e in Risultati/Qualifica/Sprint di ogni gara.
+- **Ricerca globale** nell'header (tasto `/`): piloti, squadre, gare, circuiti, paesi. Invio = pagina risultati.
+- **Filtri live** in ogni tabella e griglia, **ordinamento colonne** con un click, tema chiaro/scuro.
+- Nuove pagine **Squadra** (`#/team/<id>`) e statistiche nella pagina pilota.
