@@ -1764,6 +1764,13 @@ td:first-child .pb {
   padding: 1px 10px;
   border-radius: 99px;
 }
+.mdl {
+  display: inline-block;
+  width: 0.8em;
+  height: 1em;
+  vertical-align: -0.15em;
+  flex: none;
+}
 .md {
   position: absolute;
   top: 8px;

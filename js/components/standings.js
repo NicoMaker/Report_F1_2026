@@ -9,9 +9,9 @@ function drivers() {
         "#",
         "Pilota",
         "Squadra",
-        "🥇 Vitt.",
-        "🥈 2°",
-        "🥉 3°",
+        medal(1) + " Vitt.",
+        medal(2) + " 2°",
+        medal(3) + " 3°",
         "⏱ Pole",
         "Punti",
       ],
@@ -56,7 +56,15 @@ function teams() {
       .join("")}</div>` +
     `<h2 style="margin-top:22px">Classifica costruttori</h2>` +
     tbl(
-      ["#", "Squadra", "🥇 Vitt.", "🥈 2°", "🥉 3°", "⏱ Pole", "Punti"],
+      [
+        "#",
+        "Squadra",
+        medal(1) + " Vitt.",
+        medal(2) + " 2°",
+        medal(3) + " 3°",
+        "⏱ Pole",
+        "Punti",
+      ],
       S.cs.map((s) => [
         pb(s.positionText),
         tn(s.Constructor),
@@ -101,9 +109,9 @@ function team(id) {
     stats = [
       ["Classifica", c.position + "°"],
       ["Punti", c.points],
-      ["🥇 Vittorie", T.w],
-      ["🥈 2° posti", T.s],
-      ["🥉 3° posti", T.t],
+      [medal(1) + " Vittorie", T.w],
+      [medal(2) + " 2° posti", T.s],
+      [medal(3) + " 3° posti", T.t],
       ["⏱ Pole", T.p],
       ["Podi", T.w + T.s + T.t],
     ];

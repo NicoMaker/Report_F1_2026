@@ -27,9 +27,9 @@ function driver(id) {
     stats = [
       ...(d.dateOfBirth ? [["🎂 Età", age(d.dateOfBirth) + " anni"]] : []),
       ["Gare", all.length],
-      ["🥇 Vittorie", T.w],
-      ["🥈 2° posti", T.s],
-      ["🥉 3° posti", T.t],
+      [medal(1) + " Vittorie", T.w],
+      [medal(2) + " 2° posti", T.s],
+      [medal(3) + " 3° posti", T.t],
       ["⏱ Pole", T.p],
       ["Podi", nPod],
       ["Migliore", all.length ? best + "°" : "-"],
@@ -63,9 +63,9 @@ function driver(id) {
             ? `Arrivo: ${isNaN(+y.positionText) ? y.status || y.positionText : y.positionText + "°"}${y.grid ? " · Griglia: " + (y.grid === "0" ? "corsia box" : y.grid + "°") : ""} · ${p} pt`
             : "Gara non ancora disputata") +
           (q ? `\nQualifica: ${pole ? "POLE POSITION" : q.position + "°"}` : "");
-      return `<a href="#/race/${r.round}" class="sc${y ? "" : " off"}${cls}" title="${esc(tip)}"><span class="spm">${["", "🥇", "🥈", "🥉"][n] || ""}</span><b class="spv">${y ? p : ""}</b><span class="spb"><i style="height:${y ? Math.max(6, (p / mx) * 100) : 3}%" class="${y ? ["", "g", "s", "b"][n] || "" : "off"}"></i></span><small>${r.round}</small>${y ? pb(y.positionText) : '<span class="pb n">·</span>'}<em class="spg">${y ? (y.grid && y.grid !== "0" ? "G" + y.grid : "BOX") : ""}</em><u class="spp${pole ? " on" : ""}">${pole ? "⏱ POLE" : q ? "Q" + q.position : y ? "-" : ""}</u></a>`;
+      return `<a href="#/race/${r.round}" class="sc${y ? "" : " off"}${cls}" title="${esc(tip)}"><span class="spm">${medal(n)}</span><b class="spv">${y ? p : ""}</b><span class="spb"><i style="height:${y ? Math.max(6, (p / mx) * 100) : 3}%" class="${y ? ["", "g", "s", "b"][n] || "" : "off"}"></i></span><small>${r.round}</small>${y ? pb(y.positionText) : '<span class="pb n">·</span>'}<em class="spg">${y ? (y.grid && y.grid !== "0" ? "G" + y.grid : "BOX") : ""}</em><u class="spp${pole ? " on" : ""}">${pole ? "⏱ POLE" : q ? "Q" + q.position : y ? "-" : ""}</u></a>`;
     })
-    .join("")}</div><p class="mut sl">Barra = punti · <b>numero</b> = gara · badge = posizione d'arrivo (🥇🥈🥉 podio, R = ritirato) · G = griglia di partenza · ⏱ POLE = pole position, Q = posizione in qualifica</p>`;
+    .join("")}</div><p class="mut sl">Barra = punti · <b>numero</b> = gara · badge = posizione d'arrivo (${medal(1)}${medal(2)}${medal(3)} podio, R = ritirato) · G = griglia di partenza · ⏱ POLE = pole position, Q = posizione in qualifica</p>`;
   A.innerHTML =
     `<div class="hero dh" style="--tc:${col(tm?.constructorId || "x")}"><span class="wm">${d.permanentNumber || ""}</span>${ph(d)}<div><h2 style="margin:0">${d.givenName} ${d.familyName}</h2><span class="mut">${flag(d.nationality)} ${d.nationality}${d.dateOfBirth ? " · " + bio(d) : ""}</span><br>${tm ? `<a class="tn" href="#/team/${tm.constructorId}">${ticon(tm.constructorId, tm.name, 26)}${tm.name}</a>` : ""}${st ? ` <b class="pill">${st.position}° · ${st.points} pt · ${st.wins} vitt.</b>` : ""}</div>${pn("d", id)}</div>` +
     `<div class="stats">${stats.map(([a, b]) => `<div><b>${b}</b><small>${a}</small></div>`).join("")}</div>` +

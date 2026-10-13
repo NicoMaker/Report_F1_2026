@@ -3,6 +3,19 @@ const esc = (s) =>
     /[&<>"]/g,
     (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
   );
+// Medaglie 1°/2°/3° disegnate in SVG (le emoji 🥇🥈🥉 cambiano da sistema a sistema e su Windows l'oro sembra bronzo)
+const MC = [
+  null,
+  ["#b8860b", "#ffd23f", "#5a3d00"],
+  ["#6f7782", "#e3e6ea", "#2b2f36"],
+  ["#6e3510", "#cd7f32", "#2b1400"],
+];
+const medal = (n) => {
+  const c = MC[n];
+  return c
+    ? `<svg class="mdl" viewBox="0 0 24 30" aria-hidden="true"><path d="M5 0h6l4 12H9z" fill="#e10600"/><path d="M19 0h-6l-4 12h6z" fill="#a80500"/><circle cx="12" cy="19" r="10" fill="${c[0]}"/><circle cx="12" cy="19" r="7.6" fill="${c[1]}"/><text x="12" y="19" dy=".35em" text-anchor="middle" font-size="13" font-weight="800" fill="${c[2]}" style="font-family:'Barlow Condensed',Impact,sans-serif;font-style:italic">${n}</text></svg>`
+    : "";
+};
 // Emblemi squadra: generati (forma + colori + sigla). Se esiste img/teams/<id>.svg lo usa al suo posto.
 const TI = {
   mercedes: ["#00d2be", "#0b4f4a", "MER", "circle"],
@@ -174,7 +187,7 @@ const tally = (by, id) => {
 };
 const T3 = (o) => [o.w, o.s, o.t, o.p];
 const tlh = (o) =>
-  `<span class="tl"><b title="Vittorie">🥇 ${o.w}</b><b title="Secondi posti">🥈 ${o.s}</b><b title="Terzi posti">🥉 ${o.t}</b><b title="Pole position">⏱ Pole ${o.p}</b></span>`;
+  `<span class="tl"><b title="Vittorie">${medal(1)} ${o.w}</b><b title="Secondi posti">${medal(2)} ${o.s}</b><b title="Terzi posti">${medal(3)} ${o.t}</b><b title="Pole position">⏱ Pole ${o.p}</b></span>`;
 // Foto pilota con logo della squadra (basso a destra) e bandiera della nazionalità (basso a sinistra)
 const ph = (d) => {
   const c = S.dc?.[d.driverId],
@@ -186,7 +199,7 @@ const ph = (d) => {
 // Posizione in classifica: 1°/2°/3° con medaglia ed evidenziati
 const rk = (n) =>
   n
-    ? `<i class="rk r${+n <= 3 ? +n : 0}">${["", "🥇 ", "🥈 ", "🥉 "][+n] || ""}${n}°</i>`
+    ? `<i class="rk r${+n <= 3 ? +n : 0}">${medal(+n) ? medal(+n) + " " : ""}${n}°</i>`
     : "";
 // Badge posizione: oro/argento/bronzo, punti, fuori dai punti, ritiro (R, D, W…)
 const pb = (t) => {
@@ -223,7 +236,7 @@ const podium = (l) =>
     .filter(Boolean)
     .map(
       (x) =>
-        `<a class="pc s${x.pos}" href="${x.href}" style="--tc:${x.c}"><u class="md" title="${x.pos}° posto">${["", "🥇", "🥈", "🥉"][x.pos] || ""}</u>${x.img}<small>${x.pos}°</small><b>${x.name}</b><span class="ps">${x.sub}</span><em>${x.val}</em>${x.tl || ""}</a>`,
+        `<a class="pc s${x.pos}" href="${x.href}" style="--tc:${x.c}"><u class="md" title="${x.pos}° posto">${medal(x.pos)}</u>${x.img}<small>${x.pos}°</small><b>${x.name}</b><span class="ps">${x.sub}</span><em>${x.val}</em>${x.tl || ""}</a>`,
     )
     .join("")}</div>`;
 const podD = (ds) =>
