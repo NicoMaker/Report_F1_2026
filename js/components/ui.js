@@ -223,7 +223,7 @@ const podium = (l) =>
     .filter(Boolean)
     .map(
       (x) =>
-        `<a class="pc s${x.pos}" href="${x.href}" style="--tc:${x.c}">${x.pos === 1 ? '<u class="cr">👑</u>' : `<u class="md">${x.pos === 2 ? "🥈" : "🥉"}</u>`}${x.img}<small>${x.pos}°</small><b>${x.name}</b><span class="ps">${x.sub}</span><em>${x.val}</em>${x.tl || ""}</a>`,
+        `<a class="pc s${x.pos}" href="${x.href}" style="--tc:${x.c}"><u class="md" title="${x.pos}° posto">${["", "🥇", "🥈", "🥉"][x.pos] || ""}</u>${x.img}<small>${x.pos}°</small><b>${x.name}</b><span class="ps">${x.sub}</span><em>${x.val}</em>${x.tl || ""}</a>`,
     )
     .join("")}</div>`;
 const podD = (ds) =>

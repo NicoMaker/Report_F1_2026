@@ -46,13 +46,26 @@ function driver(id) {
         ),
     ),
   );
+  // Per ogni gara: punti, barra, numero gara, posizione d'arrivo, griglia e qualifica (POLE sì/no)
   const spark = `<div class="spark" style="--tc:${col(tm?.constructorId || "x")}">${S.races
     .map((r) => {
       const y = S.res[r.round]?.Results?.find((z) => z.Driver.driverId === id),
-        p = +(y?.points || 0);
-      return `<a href="#/race/${r.round}" title="${r.raceName}: ${y ? "P" + y.positionText + " · " + p + " pt" : "—"}"><i style="height:${y ? Math.max(6, (p / mx) * 100) : 3}%" class="${y ? "" : "off"}"></i><small>${r.round}</small></a>`;
+        q = S.q[r.round]?.QualifyingResults?.find(
+          (z) => z.Driver.driverId === id,
+        ),
+        p = +(y?.points || 0),
+        pole = !!q && +q.position === 1,
+        n = +y?.position,
+        cls = pole ? " pole" : "",
+        tip =
+          `${r.raceName}\n` +
+          (y
+            ? `Arrivo: ${isNaN(+y.positionText) ? y.status || y.positionText : y.positionText + "°"}${y.grid ? " · Griglia: " + (y.grid === "0" ? "corsia box" : y.grid + "°") : ""} · ${p} pt`
+            : "Gara non ancora disputata") +
+          (q ? `\nQualifica: ${pole ? "POLE POSITION" : q.position + "°"}` : "");
+      return `<a href="#/race/${r.round}" class="sc${y ? "" : " off"}${cls}" title="${esc(tip)}"><span class="spm">${["", "🥇", "🥈", "🥉"][n] || ""}</span><b class="spv">${y ? p : ""}</b><span class="spb"><i style="height:${y ? Math.max(6, (p / mx) * 100) : 3}%" class="${y ? (n <= 3 ? "pd" : "") : "off"}"></i></span><small>${r.round}</small>${y ? pb(y.positionText) : '<span class="pb n">·</span>'}<em class="spg">${y ? (y.grid && y.grid !== "0" ? "G" + y.grid : "BOX") : ""}</em><u class="spp${pole ? " on" : ""}">${pole ? "⏱ POLE" : q ? "Q" + q.position : y ? "-" : ""}</u></a>`;
     })
-    .join("")}</div>`;
+    .join("")}</div><p class="mut sl">Barra = punti · <b>numero</b> = gara · badge = posizione d'arrivo (🥇🥈🥉 podio, R = ritirato) · G = griglia di partenza · ⏱ POLE = pole position, Q = posizione in qualifica</p>`;
   A.innerHTML =
     `<div class="hero dh" style="--tc:${col(tm?.constructorId || "x")}"><span class="wm">${d.permanentNumber || ""}</span>${ph(d)}<div><h2 style="margin:0">${d.givenName} ${d.familyName}</h2><span class="mut">${flag(d.nationality)} ${d.nationality}${d.dateOfBirth ? " · " + bio(d) : ""}</span><br>${tm ? `<a class="tn" href="#/team/${tm.constructorId}">${ticon(tm.constructorId, tm.name, 26)}${tm.name}</a>` : ""}${st ? ` <b class="pill">${st.position}° · ${st.points} pt · ${st.wins} vitt.</b>` : ""}</div>${pn("d", id)}</div>` +
     `<div class="stats">${stats.map(([a, b]) => `<div><b>${b}</b><small>${a}</small></div>`).join("")}</div>` +
