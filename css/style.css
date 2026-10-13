@@ -359,3 +359,47 @@ tbody tr.p1:hover, tbody tr.p2:hover, tbody tr.p3:hover { filter: brightness(1.1
 /* Logo F1 ufficiale opzionale: salva il file come img/f1-logo.svg (o .png rinominando in index.html) */
 .logo { display: inline-flex; align-items: center; }
 .logo .f1lg { height: 24px; width: auto; margin-right: 4px; } .logo.hasimg .t { display: none; }
+
+/* Campione del mondo / titolo matematico */
+.champ { position: relative; display: flex; align-items: center; gap: 16px; margin: 0 0 16px; padding: 16px 20px; border-radius: var(--r); text-decoration: none; overflow: hidden;
+  border: 2px solid #f5c518; box-shadow: 0 10px 40px #f5c51840;
+  background: linear-gradient(110deg, color-mix(in srgb, #f5c518 28%, var(--card)), color-mix(in srgb, var(--tc) 28%, var(--card)) 60%, var(--card)); }
+.champ .cup { font-size: 44px; line-height: 1; filter: drop-shadow(0 4px 10px #0007); }
+.champ .ph { width: 64px; height: 64px; border: 3px solid #f5c518; }
+.champ > div { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.champ small { color: #f5c518; font-weight: 800; letter-spacing: .12em; font-size: 12px; }
+.champ b { font: italic 800 clamp(22px, 4vw, 32px)/1.1 "Barlow Condensed", Impact, sans-serif; }
+.champ span:last-child { color: var(--mut); font-size: 13px; }
+@media (max-width: 520px) { .champ { padding: 12px; gap: 10px; } .champ .cup { font-size: 30px; } .champ .ph { width: 48px; height: 48px; } }
+
+/* Header: logo F1 + "Formula 1" */
+.logo .f1lg { height: 28px; width: 28px; border-radius: 7px; margin-right: 8px; object-fit: contain; }
+.logo.hasimg .t { display: inline; } .logo .t { font-size: 22px; letter-spacing: .01em; }
+.logo b { margin-left: 6px; }
+@media (max-width: 760px) { .logo .t { display: none !important; } .logo .f1lg { margin-right: 0; } .logo b { margin-left: 4px; } }
+.dc2 .wt { margin: 1px 0 2px; }
+
+/* Frecce di navigazione */
+.wallw { position: relative; }
+.wb { position: absolute; top: 28px; z-index: 5; width: 38px; height: 38px; display: grid; place-items: center; padding: 0 0 3px; font: 700 26px/1 system-ui, sans-serif; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; box-shadow: 0 4px 14px #0005; transition: .15s; }
+.wb:hover { background: var(--red); border-color: var(--red); color: #fff; }
+.wl { left: -6px; } .wr { right: -6px; } .wb.off { opacity: 0; pointer-events: none; }
+.hero > .pn { margin-left: auto; position: relative; z-index: 2; align-self: flex-start; }
+.nv a.off { opacity: .3; pointer-events: none; }
+.pn a { cursor: pointer; }
+
+/* Tema chiaro: 1°/2°/3° con colori più scuri, altrimenti l'argento si perde sullo sfondo chiaro */
+:root[data-theme="light"] .pc.s1 { --m: #c99200; }
+:root[data-theme="light"] .pc.s2 { --m: #6a727d; border-color: #8b919acc; border-top-color: #7d8591; box-shadow: 0 10px 28px #8b919a55;
+  background: linear-gradient(180deg, color-mix(in srgb, #8b919a 24%, var(--card)), color-mix(in srgb, var(--tc) 14%, var(--card)) 62%, var(--card)); }
+:root[data-theme="light"] .pc.s3 { --m: #a85a14; border-color: #d98b3fcc; box-shadow: 0 10px 28px #d98b3f55; }
+:root[data-theme="light"] .pc.s1 small, :root[data-theme="light"] .pc.s2 small, :root[data-theme="light"] .pc.s3 small { text-shadow: none; }
+:root[data-theme="light"] .pc.s1:before, :root[data-theme="light"] .pc.s2:before, :root[data-theme="light"] .pc.s3:before { opacity: .22; }
+:root[data-theme="light"] .pc.s2 .ph { border-color: #7d8591; }
+:root[data-theme="light"] .pc em { background: color-mix(in srgb, var(--m) 20%, transparent); color: var(--fg); }
+:root[data-theme="light"] tbody tr.p2 { background: linear-gradient(90deg, #8b919a40, transparent 65%); }
+:root[data-theme="light"] tbody tr.p3 { background: linear-gradient(90deg, #d98b3f40, transparent 65%); }
+:root[data-theme="light"] tr.p2 td:first-child { box-shadow: inset 6px 0 #7d8591; }
+:root[data-theme="light"] .pb.s, :root[data-theme="light"] .rk.r2, :root[data-theme="light"] .mp .m2 { background: linear-gradient(135deg, #e6e9ee, #9aa1ad); border: 1px solid #7d8591; color: #1a1a1a; }
+:root[data-theme="light"] .tc.p2 { border-color: #8b919acc; border-top-color: #7d8591; }
+:root[data-theme="light"] .tdv.p2 { border-color: #7d8591aa; } :root[data-theme="light"] .trw.s { border-left-color: #7d8591; }

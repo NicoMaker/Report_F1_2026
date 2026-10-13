@@ -2,6 +2,7 @@ function drivers() {
   const m = +S.ds[0]?.points || 1;
   A.innerHTML =
     `<h2>Classifica piloti</h2>` +
+    champBox("d") +
     podD(S.ds) +
     tbl(
       ["#", "Pilota", "Squadra", "🥇 Vitt.", "🥈 2°", "🥉 3°", "⏱ Pole", "Punti"],
@@ -20,7 +21,8 @@ function teams() {
   const m = +S.cs[0]?.points || 1;
   const drv = (id) => S.ds.filter((d) => d.Constructors?.some((x) => x.constructorId === id));
   A.innerHTML =
-    `<h2>Squadre 2026</h2><div class="wall">${S.cs.map((c) => `<a href="#/team/${c.Constructor.constructorId}">${ticon(c.Constructor.constructorId, c.Constructor.name, 56)}<small>${c.Constructor.name}</small></a>`).join("")}</div>` +
+    `<h2>Squadre 2026</h2><div class="wallw"><button type="button" class="wb wl" aria-label="Indietro">‹</button><div class="wall">${S.cs.map((c) => `<a href="#/team/${c.Constructor.constructorId}">${ticon(c.Constructor.constructorId, c.Constructor.name, 56)}<small>${c.Constructor.name}</small></a>`).join("")}</div><button type="button" class="wb wr" aria-label="Avanti">›</button></div>` +
+    champBox("c") +
     podT(S.cs) +
     `${fbox("Cerca squadra o pilota…")}<div class="grid tg">${S.cs
       .map((c) => {
@@ -34,6 +36,7 @@ function teams() {
       S.cs.map((s) => [pb(s.positionText), tn(s.Constructor), ...T3(tally("c", s.Constructor.constructorId)), `<b>${s.points}</b><div class="bar" style="width:${(s.points / m) * 100}%;background:${col(s.Constructor.constructorId)}"></div>`]),
       pod(S.cs.map((s) => [+s.position])),
     );
+  setTimeout(() => document.querySelectorAll(".wall").forEach(wallSync), 0);
 }
 function team(id) {
   const c = S.cs.find((x) => x.Constructor.constructorId === id);
@@ -49,7 +52,7 @@ function team(id) {
   }).filter(Boolean);
   const T = tally("c", id), stats = [["Classifica", c.position + "°"], ["Punti", c.points], ["🥇 Vittorie", T.w], ["🥈 2° posti", T.s], ["🥉 3° posti", T.t], ["⏱ Pole", T.p], ["Podi", T.w + T.s + T.t]];
   A.innerHTML =
-    `<div class="hero th" style="--tc:${k}">${ticon(id, C.name, 104)}<div><h2 style="margin:0">${C.name}</h2><span class="mut">${flag(C.nationality)} ${C.nationality || ""} · ${ds.length} piloti</span></div><span class="wm tw2">${ticon(id, C.name, 150)}</span></div>` +
+    `<div class="hero th" style="--tc:${k}">${ticon(id, C.name, 104)}<div><h2 style="margin:0">${C.name}</h2><span class="mut">${flag(C.nationality)} ${C.nationality || ""} · ${ds.length} piloti</span></div><span class="wm tw2">${ticon(id, C.name, 150)}</span>${pn("c", id)}</div>` +
     `<div class="stats">${stats.map(([a, b]) => `<div><b>${b}</b><small>${a}</small></div>`).join("")}</div>` +
     `<div class="chips">${ds.map((d) => `<a class="chip" href="#/driver/${d.Driver.driverId}" style="text-decoration:none">${ph(d.Driver)}<b>${d.Driver.givenName[0]}. ${d.Driver.familyName}</b><em>${d.points} pt</em></a>`).join("")}</div>` +
     `<h3 class="sec" style="display:flex;align-items:center;gap:8px">${ticon(id, C.name, 22)} Risultati gara per gara</h3>${fbox("Cerca gara, pilota, vittoria, doppietta…")}<div class="grid trl">${rows.join("")}</div>`;

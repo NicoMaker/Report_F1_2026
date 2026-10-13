@@ -29,6 +29,37 @@ const ticon = (id, name = "", s) => {
   const lg = LOGO[id] ? `<img class="lg" src="${logoUrl(id, 128)}" data-s="${logoUrl(id, 64)}" alt="${esc(name)}" loading="lazy" onload="this.parentNode.classList.add('lgok')" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.dataset.s}else this.remove()">` : "";
   return `<span class="ti" style="${s ? "--s:" + s + "px" : ""}" title="${esc(name)}"><svg viewBox="0 0 100 100" aria-hidden="true">${shp(t[3], t[1])}<g transform="translate(50 50) scale(.86) translate(-50 -50)">${shp(t[3], t[0])}</g><text x="50" y="50" dy=".35em" text-anchor="middle" font-size="${fs}" fill="#fff" stroke="${t[1]}" stroke-width="5" paint-order="stroke" stroke-linejoin="round" style="font-family:'Barlow Condensed',Impact,sans-serif;font-weight:800;font-style:italic">${t[2]}</text></svg>${lg}<img class="loc" src="img/teams/${id}.svg" alt="" onload="this.parentNode.classList.add('im')" onerror="this.remove()"></span>`;
 };
+// Titolo mondiale: "final" = stagione finita, "clinched" = matematico con gare ancora da correre, "open" = ancora aperto.
+// Punti massimi ancora in palio: pilota 25 a gara + 8 a sprint; squadra 25+18 a gara + 8+7 a sprint.
+const titles = () => {
+  const rem = S.races.filter((r) => !S.res[r.round]), sp = rem.filter((r) => r.Sprint || S.sp[r.round]).length;
+  const mk = (list, perRace, perSprint) => {
+    const [a, b] = list, max = rem.length * perRace + sp * perSprint;
+    if (!a) return { state: "open" };
+    const gap = b ? +a.points - +b.points : +a.points;
+    return { state: rem.length === 0 ? "final" : gap > max ? "clinched" : "open", a, b, gap, max, left: rem.length };
+  };
+  return { d: mk(S.ds, 25, 8), c: mk(S.cs, 43, 15) };
+};
+// Banner "ha vinto il mondiale" (kind: "d" piloti, "c" costruttori); vuoto se il titolo è ancora aperto
+const champBox = (kind) => {
+  const t = titles()[kind];
+  if (t.state === "open") return "";
+  const d = kind === "d", w = d ? t.a.Driver : t.a.Constructor, nm = d ? `${w.givenName} ${w.familyName}` : w.name;
+  const who = d ? (t.b ? t.b.Driver.familyName : "") : t.b?.Constructor.name || "", c = d ? t.a.Constructors?.at(-1)?.constructorId : w.constructorId;
+  const title = d ? "Mondiale Piloti" : "Mondiale Costruttori";
+  const msg = t.state === "final" ? `${nm} ha vinto il ${title} 2026!` : `${nm} ha vinto matematicamente il ${title} 2026!`;
+  const team = d ? t.a.Constructors?.at(-1)?.name : "", sub = (team ? team + " · " : "") + (t.state === "final" ? `Stagione conclusa · ${t.a.points} pt${t.b ? ` · +${t.gap} su ${who}` : ""}` : `Con ancora ${t.left} gar${t.left === 1 ? "a" : "e"} da disputare · ${t.a.points} pt, +${t.gap} su ${who} (restano al massimo ${t.max} pt)`);
+  return `<a class="champ" href="#/${d ? "driver/" + w.driverId : "team/" + w.constructorId}" style="--tc:${col(c || "x")}"><span class="cup">🏆</span>${d ? ph(w) : ticon(w.constructorId, w.name, 56)}<div><small>${t.state === "final" ? "CAMPIONE DEL MONDO" : "TITOLO MATEMATICO"}</small><b>${msg}</b><span>${sub}</span></div></a>`;
+};
+// Frecce ‹ › per passare al pilota/squadra precedente o successivo (ordine di classifica)
+const pn = (kind, id) => {
+  const ids = kind === "d" ? [...S.ds.map((s) => s.Driver.driverId), ...S.drivers.map((d) => d.driverId).filter((x) => !S.ds.some((s) => s.Driver.driverId === x))] : S.cs.map((c) => c.Constructor.constructorId);
+  const i = ids.indexOf(id), nm = (x) => (kind === "d" ? ((d) => (d ? d.givenName + " " + d.familyName : ""))(S.drivers.find((d) => d.driverId === x)) : S.cs.find((c) => c.Constructor.constructorId === x)?.Constructor.name || ""), h = kind === "d" ? "driver" : "team";
+  if (i < 0) return "";
+  const a = (j, r, ch) => (ids[j] ? `<a rel="${r}" href="#/${h}/${ids[j]}" title="${esc(nm(ids[j]))}">${ch}</a>` : `<a class="off" aria-disabled="true">${ch}</a>`);
+  return `<div class="nv pn">${a(i - 1, "prev", "‹")}${a(i + 1, "next", "›")}</div>`;
+};
 // Conteggio 1°/2°/3° posti in gara e pole (qualifica) per pilota ("d") o squadra ("c")
 const tally = (by, id) => {
   const o = { w: 0, s: 0, t: 0, p: 0 }, k = (y) => (by === "d" ? y.Driver.driverId : y.Constructor.constructorId);

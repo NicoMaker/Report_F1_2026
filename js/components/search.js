@@ -119,3 +119,23 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") { ssClose(); e.target.closest(".ss").querySelector(".ssb").focus(); }
   if (e.key === "Enter") { e.preventDefault(); const li = [...e.target.closest(".ssp").querySelectorAll("li")].find((x) => !x.hidden); if (li) ssPick(li); }
 });
+
+// Frecce: striscia scorrevole (loghi squadre) e tasti ← → per precedente/successivo (pilota, squadra, gara)
+const wallSync = (w) => {
+  const b = w.parentNode;
+  b.querySelector(".wl").classList.toggle("off", w.scrollLeft < 4);
+  b.querySelector(".wr").classList.toggle("off", w.scrollLeft + w.clientWidth > w.scrollWidth - 4);
+};
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".wb");
+  if (!b) return;
+  const w = b.parentNode.querySelector(".wall");
+  w.scrollBy({ left: (b.classList.contains("wl") ? -1 : 1) * w.clientWidth * 0.75, behavior: "smooth" });
+});
+document.addEventListener("scroll", (e) => { if (e.target.classList?.contains("wall")) wallSync(e.target); }, true);
+addEventListener("resize", () => document.querySelectorAll(".wall").forEach(wallSync));
+document.addEventListener("keydown", (e) => {
+  if (e.altKey || e.ctrlKey || e.metaKey || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  const k = e.key === "ArrowLeft" ? "prev" : e.key === "ArrowRight" ? "next" : "";
+  if (k) document.querySelector(`.nv a[rel="${k}"]`)?.click();
+});
