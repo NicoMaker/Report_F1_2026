@@ -15,10 +15,19 @@ const SHP = {
 };
 const shp = (k, f) =>
   k === "circle" ? `<circle cx="50" cy="50" r="48" fill="${f}"/>` : k === "rounded" ? `<rect x="3" y="3" width="94" height="94" rx="26" fill="${f}"/>` : `<polygon points="${SHP[k] || SHP.hex}" fill="${f}"/>`;
-// Emblema in SVG inline (sempre visibile, nessun clip-path). Se esiste img/teams/<id>.svg viene usato quello.
+// Loghi ufficiali (media.formula1.com, versione chiara) caricati dal browser sopra l'emblema colorato.
+// Se un logo non si carica resta l'emblema SVG; se esiste img/teams/<id>.svg viene usato quello.
+const LOGO = {
+  mercedes: "2025/mercedes/2025mercedeslogowhite", ferrari: "2025/ferrari/2025ferrarilogolight", mclaren: "2025/mclaren/2025mclarenlogowhite",
+  red_bull: "2025/redbullracing/2025redbullracinglogowhite", rb: "2025/racingbulls/2025racingbullslogowhite", alpine: "2025/alpine/2025alpinelogowhite",
+  haas: "2025/haas/2025haaslogowhite", audi: "2026/audi/2026audilogowhite", williams: "2025/williams/2025williamslogowhite",
+  aston_martin: "2025/astonmartin/2025astonmartinlogowhite", cadillac: "2026/cadillac/2026cadillaclogowhite",
+};
+const logoUrl = (id, h) => `https://media.formula1.com/image/upload/c_fit,h_${h}/q_auto/v1740000001/common/f1/${LOGO[id]}.webp`;
 const ticon = (id, name = "", s) => {
   const t = TI[id] || [col(id), "#111", (name || id).slice(0, 3).toUpperCase(), "hex"], fs = [0, 56, 42, 34, 28][t[2].length] || 24;
-  return `<span class="ti" style="${s ? "--s:" + s + "px" : ""}" title="${esc(name)}"><svg viewBox="0 0 100 100" aria-hidden="true">${shp(t[3], t[1])}<g transform="translate(50 50) scale(.86) translate(-50 -50)">${shp(t[3], t[0])}</g><text x="50" y="50" dy=".35em" text-anchor="middle" font-size="${fs}" fill="#fff" stroke="${t[1]}" stroke-width="5" paint-order="stroke" stroke-linejoin="round" style="font-family:'Barlow Condensed',Impact,sans-serif;font-weight:800;font-style:italic">${t[2]}</text></svg><img src="img/teams/${id}.svg" alt="" onload="this.parentNode.classList.add('im')" onerror="this.remove()"></span>`;
+  const lg = LOGO[id] ? `<img class="lg" src="${logoUrl(id, 128)}" data-s="${logoUrl(id, 64)}" alt="${esc(name)}" loading="lazy" onload="this.parentNode.classList.add('lgok')" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.dataset.s}else this.remove()">` : "";
+  return `<span class="ti" style="${s ? "--s:" + s + "px" : ""}" title="${esc(name)}"><svg viewBox="0 0 100 100" aria-hidden="true">${shp(t[3], t[1])}<g transform="translate(50 50) scale(.86) translate(-50 -50)">${shp(t[3], t[0])}</g><text x="50" y="50" dy=".35em" text-anchor="middle" font-size="${fs}" fill="#fff" stroke="${t[1]}" stroke-width="5" paint-order="stroke" stroke-linejoin="round" style="font-family:'Barlow Condensed',Impact,sans-serif;font-weight:800;font-style:italic">${t[2]}</text></svg>${lg}<img class="loc" src="img/teams/${id}.svg" alt="" onload="this.parentNode.classList.add('im')" onerror="this.remove()"></span>`;
 };
 // Conteggio 1°/2°/3° posti in gara e pole (qualifica) per pilota ("d") o squadra ("c")
 const tally = (by, id) => {

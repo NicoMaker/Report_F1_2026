@@ -348,3 +348,14 @@ tbody tr.p1:hover, tbody tr.p2:hover, tbody tr.p3:hover { filter: brightness(1.1
 .ssl li span:not(.fg), .ssb span:not(.fg) { text-align: left; }
 @media (max-width: 520px) { .ss { min-width: 0; width: 100%; } }
 .mp .m2, .mp .m3 { color: #1a1a1a; }
+
+/* Logo ufficiale sopra l'emblema colorato */
+.ti img.lg { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 70%; height: 56%; object-fit: contain; z-index: 1; background: none; padding: 0; border-radius: 0; filter: drop-shadow(0 1px 2px #0008); }
+.ti.lgok text { display: none; }
+.ti img.loc { z-index: 2; }
+.av .ti img.lg { display: none; } .av .ti.lgok text { display: none; }
+.wall .ti img.lg, .pc .ti img.lg, .hero .ti img.lg { width: 74%; height: 60%; }
+
+/* Logo F1 ufficiale opzionale: salva il file come img/f1-logo.svg (o .png rinominando in index.html) */
+.logo { display: inline-flex; align-items: center; }
+.logo .f1lg { height: 24px; width: auto; margin-right: 4px; } .logo.hasimg .t { display: none; }

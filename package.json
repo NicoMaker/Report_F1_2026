@@ -1,0 +1,7 @@
+{
+  "name": "report-f1-2026",
+  "version": "2.2.0",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": { "start": "node server.js" }
+}
