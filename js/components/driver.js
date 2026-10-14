@@ -101,7 +101,8 @@ function driver(id) {
   }
   A.querySelectorAll(".sw").forEach((w) => {
     const sc = w.querySelector(".spark, .tw");
-    if (sc) sc.addEventListener("scroll", () => arrowSync(w), { passive: true });
+    if (sc)
+      sc.addEventListener("scroll", () => arrowSync(w), { passive: true });
     arrowSync(w);
   });
   // La striscia parte centrata sull'ultima gara disputata
@@ -120,7 +121,10 @@ function arrowSync(w) {
   if (!sc || !l || !r) return;
   const can = sc.scrollWidth > sc.clientWidth + 4;
   l.classList.toggle("off", !can || sc.scrollLeft < 4);
-  r.classList.toggle("off", !can || sc.scrollLeft + sc.clientWidth > sc.scrollWidth - 4);
+  r.classList.toggle(
+    "off",
+    !can || sc.scrollLeft + sc.clientWidth > sc.scrollWidth - 4,
+  );
 }
 document.addEventListener("click", (e) => {
   const b = e.target.closest(".sa");
