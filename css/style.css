@@ -2645,3 +2645,64 @@ nav a.on {
   color: #fff;
   box-shadow: 0 4px 16px #e1060055;
 }
+
+/* Frecce ‹ › per scorrere la striscia punti e la tabella risultati nella pagina pilota */
+.sw {
+  position: relative;
+}
+.sw .spark {
+  position: relative;
+  scrollbar-width: none;
+}
+.sw .spark::-webkit-scrollbar {
+  display: none;
+}
+.sa {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 0 0 3px;
+  font:
+    700 26px/1 system-ui,
+    sans-serif;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--fg);
+  cursor: pointer;
+  box-shadow: 0 4px 14px #0006;
+  transition:
+    background 0.15s,
+    opacity 0.15s;
+}
+.sa:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.sal {
+  left: 4px;
+}
+.sar {
+  right: 4px;
+}
+.sa.off {
+  opacity: 0;
+  pointer-events: none;
+}
+.sw.tb .sa {
+  top: 52px;
+  transform: none;
+}
+@media (max-width: 520px) {
+  .sa {
+    width: 34px;
+    height: 34px;
+    font-size: 24px;
+  }
+}
