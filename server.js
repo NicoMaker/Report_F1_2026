@@ -19,6 +19,17 @@ async function save(k) {
     console.log("✗", k, e.message);
   }
 }
+// vero se il file non esiste o contiene una gara senza dati (es. giri/pit stop salvati prima della fine della gara)
+const missing = (k) => {
+  const f = file(k);
+  if (!fs.existsSync(f)) return true;
+  try {
+    const j = JSON.parse(fs.readFileSync(f, "utf8"));
+    return !(j.Races || j.StandingsLists || []).length;
+  } catch {
+    return true;
+  }
+};
 let busy = false;
 async function update() {
   if (busy) return;
@@ -36,8 +47,9 @@ async function update() {
       for (const p of ["dstand", "cstand", "pitstops", "laps"]) {
         const k = p + "_" + r.round,
           last = r === finished.at(-1);
-        // scarica ciò che manca; per l'ultima gara aggiorna anche classifiche e pit stop
-        if (!fs.existsSync(file(k)) || (last && p !== "laps")) await save(k);
+        // scarica ciò che manca o è rimasto vuoto (dati salvati troppo presto, prima che l'API li avesse);
+        // per l'ultima gara aggiorna sempre classifiche e pit stop
+        if (missing(k) || (last && p !== "laps")) await save(k);
       }
   } catch (e) {
     console.log("Errore giri/classifiche:", e.message);
