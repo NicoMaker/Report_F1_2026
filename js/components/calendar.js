@@ -24,7 +24,7 @@ function cal() {
           .slice(1, 3)
           .map(
             (y, i) =>
-              `<span style="--tc:${col(y.Constructor.constructorId)}" title="${y.Driver.givenName} ${y.Driver.familyName} · ${y.Constructor.name}"><i class="m${i + 2}">${i + 2}°</i>${ticon(y.Constructor.constructorId, y.Constructor.name, 20)}${flag(y.Driver.nationality)} ${y.Driver.code || y.Driver.familyName.slice(0, 3).toUpperCase()}</span>`,
+              `<span style="--tc:${col(y.Constructor.constructorId)}" title="${y.Driver.givenName} ${y.Driver.familyName} · ${y.Constructor.name}"><i class="m${i + 2}">${i + 2}°</i>${ph(y.Driver)}<span class="mx"><em class="mn">${y.Driver.givenName} ${y.Driver.familyName}</em><small class="mt">${ticon(y.Constructor.constructorId, y.Constructor.name, 16)} ${y.Constructor.name}</small></span></span>`,
           )
           .join("")}</div>`
       : `<div class="w soon">${n ? "⏱ Prossima gara" : "In programma"}</div>`;
