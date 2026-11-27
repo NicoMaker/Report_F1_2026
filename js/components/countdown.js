@@ -43,7 +43,11 @@ const TZ_COUNTRY = [
   ["united states", "America/New_York"],
 ];
 const circuitTz = (r) => {
-  const id = (r.Circuit.circuitId + " " + r.Circuit.Location.locality).toLowerCase();
+  const id = (
+    r.Circuit.circuitId +
+    " " +
+    r.Circuit.Location.locality
+  ).toLowerCase();
   const byC = TZ_CIRCUIT.find(([re]) => re.test(id));
   if (byC) return byC[1];
   const c = String(r.Circuit.Location.country || "").toLowerCase();
@@ -65,7 +69,11 @@ const weekend = (r) =>
       label: l,
       ts: Date.parse(r[k].date + "T" + r[k].time),
     })),
-    { label: "Gara", ts: Date.parse(r.date + "T" + (r.time || "12:00:00Z")), race: true },
+    {
+      label: "Gara",
+      ts: Date.parse(r.date + "T" + (r.time || "12:00:00Z")),
+      race: true,
+    },
   ]
     .filter((s) => !isNaN(s.ts))
     .sort((a, b) => a.ts - b.ts);
@@ -87,7 +95,12 @@ const myTz = () => Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
 
 const split = (ms) => {
   const s = Math.max(0, Math.floor(ms / 1000));
-  return { d: Math.floor(s / 86400), h: Math.floor(s / 3600) % 24, m: Math.floor(s / 60) % 60, s: s % 60 };
+  return {
+    d: Math.floor(s / 86400),
+    h: Math.floor(s / 3600) % 24,
+    m: Math.floor(s / 60) % 60,
+    s: s % 60,
+  };
 };
 const p2 = (n) => String(n).padStart(2, "0");
 // Dopo l'inizio, la gara dura circa 2 ore e mezza: poi si aspettano i risultati
@@ -98,7 +111,8 @@ const bigCd = (ts, race) => {
   if (ms <= 0)
     return `<div class="cdst">${Date.now() - ts < RACE_MS ? "🔴 Gara in corso" : Date.now() - ts < 864e5 ? "⏳ Risultati in arrivo" : "Gara già disputata · risultati non ancora disponibili"}</div>`;
   const t = split(ms),
-    u = (v, l) => `<div class="cdu"><b>${race ? p2(v) : v}</b><small>${l}</small></div>`;
+    u = (v, l) =>
+      `<div class="cdu"><b>${race ? p2(v) : v}</b><small>${l}</small></div>`;
   return u(t.d, "giorni") + u(t.h, "ore") + u(t.m, "min") + u(t.s, "sec");
 };
 const miniCd = (ts) => {
@@ -133,7 +147,9 @@ const nextRace = () => {
 
 // Aggiorna tutti i conti alla rovescia presenti nella pagina ogni secondo
 setInterval(() => {
-  document.querySelectorAll(".cdw[data-ts]").forEach((e) => (e.innerHTML = bigCd(+e.dataset.ts, true)));
+  document
+    .querySelectorAll(".cdw[data-ts]")
+    .forEach((e) => (e.innerHTML = bigCd(+e.dataset.ts, true)));
   document.querySelectorAll(".nxt[data-ts]").forEach((e) => {
     const ts = +e.dataset.ts,
       t = miniCd(ts);
