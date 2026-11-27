@@ -4,7 +4,7 @@ Dati: Jolpica/Ergast API (calendario, risultati, qualifica, sprint, giri, pit st
 
 ## Avvio (consigliato: salvataggio automatico)
 
-    npm start               # (= node server.js) sito su http://localhost:3000, JSON salvati in data/ e aggiornati ogni 15 min
+    node server.js          # sito su http://localhost:3000, JSON salvati in data/ e aggiornati ogni 15 min
     REFRESH_MIN=5 node server.js   # cambia la frequenza
 
 Richiede Node 18+, nessuna dipendenza da installare. Il primo avvio scarica anche i giri di tutte le gare concluse (ci vuole qualche minuto: l'API ha un limite di richieste).
@@ -16,7 +16,7 @@ Apri index.html: i dati arrivano direttamente dall'API e restano in cache nel br
 
 ## Struttura
 
-    index.html · css/style.css · css/intro.css · server.js · package.json
+    index.html · css/style.css · css/intro.css · css/modern.css · css/mobile.css · server.js · package.json
     js/            api.js (API+cache) · utils.js (bandiere) · data.js · router.js · intro.js
     js/components/ ui · calendar · standings · driver · race · search
     img/flags/     bandiere SVG locali (nazioni e nazionalità)
@@ -37,7 +37,7 @@ Apri index.html: i dati arrivano direttamente dall'API e restano in cache nel br
 - **Intro animata** a ogni ingresso (stile Finanza_e_Statistica): logo F1 con anello che si disegna, titolo "Formula 1 2026", linee di velocità e bandiera a scacchi. Click o tasto per saltarla; segue il tema chiaro/scuro.
 - **Logo F1 nell'header** al posto della scritta "Formula 1": usa `img/f1-logo.svg` se lo aggiungi, altrimenti il logo ufficiale da formula1.com (stesso logo anche per intro e favicon), con emblema stilizzato di riserva. Accanto resta il badge rosso **2026**.
 - **Riga rossa di posizione a tutta larghezza**: l'header ha la riga rossa su tutta la larghezza e un segmento acceso, che scorre, sotto la voce di menu in cui ti trovi.
-- Aggiunto `package.json` (`npm start`).
+- Avvio solo con `node server.js` (nessuno script npm).
 
 ## Novità (v2.2)
 

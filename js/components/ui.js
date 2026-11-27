@@ -226,7 +226,8 @@ const tmb = (n) =>
 const pb = (t) => {
   const n = +t,
     x = isNaN(n);
-  return `<span class="pb ${x ? "x" : n === 1 ? "g" : n === 2 ? "s" : n === 3 ? "b" : n <= 10 ? "p" : "n"}">${x ? t : n}</span>`;
+  const m = !x && n >= 1 && n <= 3 ? medal(n) : "";
+  return `<span class="pb ${x ? "x" : n === 1 ? "g" : n === 2 ? "s" : n === 3 ? "b" : n <= 10 ? "p" : "n"}${m ? " pm" : ""}">${m}<span class="pv">${x ? t : n}</span></span>`;
 };
 const dn = (d) =>
   `<a class="dn" href="#/driver/${d.driverId}">${ph(d)}<span>${d.givenName[0]}. <b>${d.familyName}</b></span></a>`;
@@ -304,11 +305,3 @@ const podR = (x, f) =>
       val: f(y) || "",
     })),
   );
-const nextRace = () => {
-  const r = S.races.find((x) => !S.res[x.round]);
-  if (!r) return "";
-  const d = Math.ceil(
-    (new Date(r.date + "T" + (r.time || "12:00:00Z")) - Date.now()) / 864e5,
-  );
-  return `<a class="next" href="#/race/${r.round}"><span class="fg">${flag(r.Circuit.Location.country)}</span><div><small>Prossima gara · ${fd(r)}</small><h3>${r.raceName}</h3><p>${r.Circuit.circuitName}</p></div>${d > 0 ? `<div class="cd"><b>${d}</b><small>giorni</small></div>` : ""}</a>`;
-};

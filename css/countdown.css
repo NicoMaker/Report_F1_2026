@@ -1,0 +1,157 @@
+/* Prossima gara: conto alla rovescia + orari weekend + fine campionato */
+.next {
+  flex-wrap: wrap;
+}
+.next > div:nth-child(2) {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.cdw {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+.cdu {
+  min-width: 58px;
+  padding: 8px 6px 6px;
+  text-align: center;
+  background: #0004;
+  border-radius: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.cdu b {
+  display: block;
+  font:
+    italic 800 28px/1 "Barlow Condensed",
+    Impact,
+    sans-serif;
+}
+.cdu small {
+  font-size: 11px;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.cdst {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #0004;
+  font-weight: 800;
+}
+.next.end {
+  background: linear-gradient(120deg, #f5c518, #b8860b);
+  color: #1a1400;
+  box-shadow: 0 8px 30px #f5c51840;
+}
+.next.end h3 {
+  font-size: 34px;
+}
+.next.end .fg {
+  font-size: 52px;
+}
+
+.nxs {
+  margin: 0 0 16px;
+}
+.nxg {
+  display: grid;
+  gap: 8px;
+}
+.nxr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.nxr.rc {
+  border-color: color-mix(in srgb, var(--red) 60%, transparent);
+}
+.nxr.nx {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red);
+}
+.nxr.done {
+  opacity: 0.55;
+}
+.nxl {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.nxl b {
+  font-size: 16px;
+}
+.nxl span {
+  font-size: 12.5px;
+  color: var(--mut);
+}
+.nxl em {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--fg);
+}
+.nxt {
+  flex: none;
+  padding: 5px 10px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--red) 14%, transparent);
+  font:
+    italic 800 17px/1 "Barlow Condensed",
+    Impact,
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.nxr.done .nxt {
+  background: transparent;
+  font-size: 14px;
+}
+.nxn {
+  font-size: 12px;
+  margin: 8px 2px 0;
+}
+
+@media (max-width: 520px) {
+  .cdw {
+    flex: 1 1 100%;
+    margin: 4px 0 0;
+    justify-content: space-between;
+  }
+  .cdu {
+    flex: 1;
+    min-width: 0;
+  }
+  .nxr {
+    padding: 10px 12px;
+  }
+  .nxt {
+    font-size: 15px;
+  }
+}
+
+/* Tema chiaro */
+:root[data-theme="light"] .cdu,
+:root[data-theme="light"] .cdst {
+  background: color-mix(in srgb, var(--red) 10%, #fff);
+  border: 1px solid color-mix(in srgb, var(--red) 25%, transparent);
+  color: var(--fg);
+}
+:root[data-theme="light"] .cdu small {
+  color: var(--mut);
+  opacity: 1;
+}
+:root[data-theme="light"] .next.end {
+  color: #1a1400;
+}
+:root[data-theme="light"] .next.end p,
+:root[data-theme="light"] .next.end small {
+  color: #3a2f00;
+}
+:root[data-theme="light"] .next.end h3 {
+  color: #1a1400;
+}

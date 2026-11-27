@@ -107,6 +107,12 @@ document.addEventListener("keydown", (e) => {
     qi.focus();
   }
 });
+// Testo di un elemento senza le medaglie SVG (il numero disegnato nella medaglia sporcherebbe ordinamento e filtro)
+const plainText = (el) => {
+  const c = el.cloneNode(true);
+  c.querySelectorAll("svg").forEach((x) => x.remove());
+  return c.textContent;
+};
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".sb")) sr.hidden = true;
   const th = e.target.closest("th");
@@ -117,7 +123,7 @@ document.addEventListener("click", (e) => {
   th.parentNode.querySelectorAll("th").forEach((x) => delete x.dataset.d);
   th.dataset.d = d;
   const key = (r) => {
-    const t = r.cells[i].textContent.trim().replace(",", "."),
+    const t = plainText(r.cells[i]).trim().replace(",", "."),
       m = t.match(/^\+?(\d+):(\d+(?:\.\d+)?)/),
       n = m ? +m[1] * 60 + +m[2] : parseFloat(t);
     return isNaN(n) ? t.toLowerCase() : n;
@@ -144,9 +150,7 @@ document.addEventListener("input", (e) => {
     ? [...t.children]
     : [...t.querySelectorAll("tbody tr")]
   ).forEach((el) => {
-    const x = norm(
-      el.textContent + " " + (el.querySelector("img,i.ph") ? "" : ""),
-    );
+    const x = norm(plainText(el));
     el.hidden = !w.every((k) => x.includes(k));
   });
 });

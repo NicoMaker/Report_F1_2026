@@ -9,10 +9,10 @@ function driver(id) {
         x && [
           r.round,
           `<a href="#/race/${r.round}">${r.raceName}</a>`,
-          tn(x.Constructor),
-          x.grid,
           pb(x.positionText),
           x.points,
+          tn(x.Constructor),
+          x.grid,
           x.Time?.time || x.status,
           x.FastestLap?.Time?.time || "",
         ]
@@ -67,7 +67,7 @@ function driver(id) {
           (q
             ? `\nQualifica: ${pole ? "POLE POSITION" : q.position + "°"}`
             : "");
-      return `<a href="#/race/${r.round}" class="sc${y ? "" : " off"}${cls}" title="${esc(tip)}"><span class="spm">${medal(n)}</span><b class="spv">${y ? p : ""}</b><span class="spb"><i style="height:${y ? Math.max(6, (p / mx) * 100) : 3}%" class="${y ? ["", "g", "s", "b"][n] || "" : "off"}"></i></span><small>${r.round}</small>${y ? pb(y.positionText) : '<span class="pb n">·</span>'}<em class="spg">${y ? (y.grid && y.grid !== "0" ? "G" + y.grid : "BOX") : ""}</em><u class="spp${pole ? " on" : ""}">${pole ? "⏱ POLE" : q ? "Q" + q.position : y ? "-" : ""}</u></a>`;
+      return `<a href="#/race/${r.round}" class="sc${y ? "" : " off"}${cls}" title="${esc(tip)}"><span class="spm"></span><b class="spv">${y ? p : ""}</b><span class="spb"><i style="height:${y ? Math.max(6, (p / mx) * 100) : 3}%" class="${y ? ["", "g", "s", "b"][n] || "" : "off"}"></i></span><small>${r.round}</small>${y ? pb(y.positionText) : '<span class="pb n">·</span>'}<em class="spg">${y ? (y.grid && y.grid !== "0" ? "G" + y.grid : "BOX") : ""}</em><u class="spp${pole ? " on" : ""}">${pole ? "⏱ POLE" : q ? "Q" + q.position : y ? "-" : ""}</u></a>`;
     })
     .join(
       "",
@@ -81,10 +81,10 @@ function driver(id) {
       [
         "#",
         "Gara",
-        "Squadra",
-        "Griglia",
         "Arrivo",
         "Punti",
+        "Squadra",
+        "Griglia",
         "Tempo / stato",
         "Giro veloce",
       ],
@@ -93,6 +93,7 @@ function driver(id) {
   // Frecce ‹ › per muoversi tra le gare nella striscia dei punti e nella tabella dei risultati
   const tw = A.querySelector(".tw");
   if (tw) {
+    tw.classList.add("rtw");
     const w = document.createElement("div");
     w.className = "sw tb";
     tw.replaceWith(w);

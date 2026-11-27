@@ -1,0 +1,373 @@
+/* =====================================================================
+   mobile.css · rifinitura mobile (caricato per ultimo)
+   - medaglie 1°/2°/3° grandi, nitide e sulla stessa riga del numero
+   - badge "CAMPIONE MATEMATICO" e banner titolo leggibili su schermi stretti
+   - righe delle classifiche/tappe allineate su una sola riga
+   ===================================================================== */
+
+/* ---------- Medaglie ---------- */
+.mdl {
+  display: inline-block;
+  width: 0.8em;
+  height: 1em;
+  vertical-align: -0.15em;
+  flex: none;
+  filter: drop-shadow(0 1px 2px #0006);
+}
+
+/* Badge posizione con medaglia: medaglia + numero SEMPRE sulla stessa riga */
+.pb.pm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 62px;
+  padding: 0 10px 0 7px;
+  white-space: nowrap;
+}
+.pb.pm .mdl {
+  width: 18px;
+  height: 22px;
+  vertical-align: 0;
+}
+.pb .pv {
+  line-height: 1;
+}
+
+/* Pillola posizione (1°, 2°, 3°): mai spezzata su due righe */
+.rk {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.rk .mdl {
+  width: 0.62em;
+  height: 0.8em;
+  vertical-align: 0;
+}
+
+/* Etichetta "CAMPIONE MATEMATICO / DEL MONDO": mai ovale, testo su due righe ordinate */
+.ctag {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 3px;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 16px;
+  padding: 8px 16px 8px 12px;
+  flex-wrap: nowrap;
+}
+.ctag i {
+  grid-row: 1 / 3;
+  font-size: 26px;
+}
+.ctag b {
+  grid-column: 2;
+  font-size: 19px;
+  line-height: 1.05;
+}
+.ctag small {
+  grid-column: 2;
+  flex-basis: auto;
+  margin: 0;
+  line-height: 1.25;
+  font-size: 11.5px;
+}
+.hero > div .ctag {
+  display: grid;
+  width: fit-content;
+}
+
+/* Righe tabella: tutto centrato sulla stessa linea */
+td {
+  vertical-align: middle;
+}
+td .tn,
+td .dn {
+  display: flex;
+  align-items: center;
+}
+td .pb {
+  vertical-align: middle;
+}
+
+/* Striscia "Punti gara per gara": la medaglia sta ora dentro il badge posizione */
+.spark .spm {
+  display: none;
+}
+.spark .pb.pm {
+  min-width: 0;
+  width: 100%;
+  max-width: 78px;
+  padding: 0 6px 0 4px;
+  gap: 3px;
+}
+.spark .pb.pm .mdl {
+  width: 14px;
+  height: 18px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 720px) {
+  /* Podio: medaglie grandi e ben visibili */
+  .pc .md {
+    font-size: 36px;
+    top: 6px;
+    left: 6px;
+    z-index: 3;
+  }
+  .pc .md .mdl {
+    width: 0.8em;
+    height: 1em;
+    filter: drop-shadow(0 2px 4px #000a);
+  }
+  .pc.s1 .md {
+    font-size: 40px;
+  }
+
+  /* Banner titolo: icona + avatar + etichetta sulla prima riga, testo a tutta larghezza sotto */
+  .champ {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 14px;
+  }
+  .champ > div {
+    display: contents;
+  }
+  .champ .cup {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 36px;
+  }
+  .champ > .av,
+  .champ > .ti {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .champ small {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+  .champ b {
+    grid-column: 1 / -1;
+    font-size: clamp(21px, 6.2vw, 27px);
+    line-height: 1.12;
+  }
+  .champ > div > span {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* Header pilota/squadra: avatar non tagliato, contenuto che usa tutta la larghezza */
+  .hero {
+    flex-wrap: wrap;
+    padding: 14px;
+    gap: 12px 14px;
+  }
+  .hero > .av {
+    margin-left: 6px;
+  }
+  .hero > div:not(.nv):not(.pn) {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .hero .ctag {
+    margin-top: 12px;
+    width: 100%;
+  }
+
+  /* Tabelle: squadra come sola icona, righe compatte e sulla stessa linea */
+  td,
+  th {
+    padding: 8px 8px;
+  }
+  td .tn {
+    font-size: 0;
+    gap: 0;
+  }
+  td .tn .ti {
+    flex: none;
+  }
+  td:first-child {
+    padding-left: 10px;
+  }
+  td:first-child .pb.pm {
+    min-width: 58px;
+  }
+  td .dn {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pc .md {
+    font-size: 32px;
+    top: 4px;
+    left: 4px;
+  }
+  .pc.s1 .md {
+    font-size: 36px;
+  }
+  .pb.pm {
+    min-width: 54px;
+    padding: 0 8px 0 6px;
+  }
+  .pb.pm .mdl {
+    width: 16px;
+    height: 20px;
+  }
+}
+
+/* ---------- Pagina pilota/squadra su mobile ---------- */
+@media (max-width: 720px) {
+  /* Frecce ‹ › in alto a destra: non rubano larghezza al testo dell'header */
+  .hero > .pn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    margin: 0;
+    z-index: 3;
+  }
+  .hero.dh > div:not(.nv):not(.pn) h2,
+  .hero.th > div:not(.nv):not(.pn) h2 {
+    padding-right: 88px;
+  }
+  .hero .ctag {
+    width: fit-content;
+    max-width: 100%;
+    padding: 8px 12px 8px 10px;
+  }
+  .hero .ctag b {
+    font-size: 16px;
+    letter-spacing: 0.03em;
+  }
+  .hero .ctag i {
+    font-size: 24px;
+  }
+  .hero .ctag small {
+    font-size: 11px;
+  }
+
+  /* Risultati gara per gara: nome gara che va a capo, posizione e punti sempre visibili */
+  .rtw td:nth-child(2) {
+    white-space: normal;
+    min-width: 104px;
+    line-height: 1.2;
+  }
+  .rtw td:nth-child(2) a {
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 520px) {
+  /* Numero pilota: in alto a destra sotto le frecce, mai sotto al badge campione */
+  .dh .wm {
+    top: 58px;
+    bottom: auto;
+    right: 14px;
+    font-size: 46px;
+    opacity: 0.9;
+  }
+}
+
+/* Card squadra: posizione dei piloti (1°, 2°, 4°…) in una colonna di larghezza fissa, tutto sulla stessa riga */
+.tcd .rk,
+.tcd .rk.r1,
+.tcd .rk.r2,
+.tcd .rk.r3 {
+  box-sizing: border-box;
+  width: 66px;
+  min-width: 66px;
+  justify-content: center;
+  padding: 3px 4px;
+  font-size: 20px;
+  gap: 4px;
+}
+.tcd .rk .mdl {
+  width: 14px;
+  height: 18px;
+}
+
+/* Card squadra: TUTTE le posizioni (con o senza medaglia) hanno la stessa pillola, larghezza e allineamento */
+.tcd .rk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  width: 70px;
+  min-width: 70px;
+  height: 32px;
+  padding: 0 8px;
+  gap: 6px;
+  border-radius: 99px;
+  font-size: 20px;
+  line-height: 1;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--fg) 8%, transparent);
+  color: var(--fg);
+}
+.tcd .rk::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 18px;
+}
+.tcd .rk.r1,
+.tcd .rk.r2,
+.tcd .rk.r3 {
+  padding: 0 8px;
+  color: #1a1a1a;
+}
+.tcd .rk.r1 {
+  background: linear-gradient(135deg, #ffe27a, #e0a800);
+}
+.tcd .rk.r2 {
+  background: linear-gradient(135deg, #fff, #b9bfc8);
+}
+.tcd .rk.r3 {
+  background: linear-gradient(135deg, #f0b27a, #b86a25);
+}
+.tcd .rk .mdl {
+  order: -1;
+  width: 14px;
+  height: 18px;
+  margin: 0;
+}
+.tcd .rk:has(.mdl)::before {
+  display: none;
+}
+.tcd .tcl {
+  align-items: center;
+}
+
+/* Tema chiaro: card "Prossima gara" leggibile anche senza hover (il testo era bianco su sfondo bianco) */
+:root[data-theme="light"] .next {
+  color: var(--fg);
+}
+:root[data-theme="light"] .next h3 {
+  color: var(--fg);
+}
+:root[data-theme="light"] .next small,
+:root[data-theme="light"] .next p {
+  color: var(--mut);
+  opacity: 1;
+}
+:root[data-theme="light"] .next .cd {
+  background: color-mix(in srgb, var(--red) 10%, #fff);
+  border: 1px solid color-mix(in srgb, var(--red) 25%, transparent);
+}
+:root[data-theme="light"] .next .cd small {
+  color: var(--mut);
+}
